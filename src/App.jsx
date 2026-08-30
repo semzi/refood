@@ -136,27 +136,27 @@ function BusinessShell({path, navigate}){
           </main>
         </div>
       </div>
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0f2815] flex justify-around items-center pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] px-2 z-30">
-        <button onClick={()=>navigate("/business")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: active==="overview"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${active==="overview"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconGrid size={20}/>
-            {active==="overview" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0f2815] flex justify-around items-center pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] px-2 z-30">
+        <button onClick={()=>navigate("/business")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: active==="overview"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active==="overview"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconGrid size={17}/>
+            {active==="overview" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${active==="overview"?"font-bold text-white":"font-medium text-white/50"}`}>Overview</span>
+          <span className={`text-[10px] leading-none ${active==="overview"?"font-bold text-white":"font-medium text-white/50"}`}>Overview</span>
         </button>
-        <button onClick={()=>navigate("/business/listings")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: active==="listings"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${active==="listings"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconStore size={20}/>
-            {active==="listings" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("/business/listings")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: active==="listings"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active==="listings"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconStore size={17}/>
+            {active==="listings" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${active==="listings"?"font-bold text-white":"font-medium text-white/50"}`}>Listings</span>
+          <span className={`text-[10px] leading-none ${active==="listings"?"font-bold text-white":"font-medium text-white/50"}`}>Listings</span>
         </button>
-        <button onClick={()=>navigate("/business/orders")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: active==="orders"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${active==="orders"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconClipboard size={20}/>
-            {active==="orders" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("/business/orders")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: active==="orders"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active==="orders"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconClipboard size={17}/>
+            {active==="orders" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${active==="orders"?"font-bold text-white":"font-medium text-white/50"}`}>Orders</span>
+          <span className={`text-[10px] leading-none ${active==="orders"?"font-bold text-white":"font-medium text-white/50"}`}>Orders</span>
         </button>
       </div>
     </div>
@@ -369,46 +369,46 @@ function CustomerShell(){
         </aside>
         <div className="flex-1 min-w-0 w-full overflow-hidden">
           <TopBar />
-          <main className="px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8 pb-32 sm:pb-24 lg:pb-8 max-w-[1100px] mx-auto w-full">
+          <main className="px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8 pb-28 sm:pb-24 lg:pb-8 max-w-[1100px] mx-auto w-full">
             <RouterView />
           </main>
         </div>
       </div>
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0f2815] flex justify-around items-center pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] px-2 z-30">
-        <button onClick={()=>navigate("home")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: route.name==="home"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${route.name==="home"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconHome size={route.name==="home"?22:20} className={route.name==="home"?"fill-current":""}/>
-            {route.name==="home" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0f2815] flex justify-around items-center pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] px-2 z-30">
+        <button onClick={()=>navigate("home")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: route.name==="home"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${route.name==="home"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconHome size={route.name==="home"?19:17} className={route.name==="home"?"fill-current":""}/>
+            {route.name==="home" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${route.name==="home"?"font-bold text-white":"font-medium text-white/50"}`}>Home</span>
+          <span className={`text-[10px] leading-none ${route.name==="home"?"font-bold text-white":"font-medium text-white/50"}`}>Home</span>
         </button>
-        <button onClick={()=>navigate("browse")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: route.name==="browse"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${route.name==="browse"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconSearch size={20}/>
-            {route.name==="browse" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("browse")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: route.name==="browse"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${route.name==="browse"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconSearch size={17}/>
+            {route.name==="browse" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${route.name==="browse"?"font-bold text-white":"font-medium text-white/50"}`}>Search</span>
+          <span className={`text-[10px] leading-none ${route.name==="browse"?"font-bold text-white":"font-medium text-white/50"}`}>Search</span>
         </button>
-        <button onClick={()=>navigate("favorites")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: route.name==="favorites"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${route.name==="favorites"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconHeart size={20} filled={route.name==="favorites"}/>
-            {route.name==="favorites" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("favorites")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: route.name==="favorites"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${route.name==="favorites"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconHeart size={17} filled={route.name==="favorites"}/>
+            {route.name==="favorites" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${route.name==="favorites"?"font-bold text-white":"font-medium text-white/50"}`}>Favourites</span>
+          <span className={`text-[10px] leading-none ${route.name==="favorites"?"font-bold text-white":"font-medium text-white/50"}`}>Favourites</span>
         </button>
-        <button onClick={()=>navigate("orders")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: ["orders","orderDetail","trackOrder"].includes(route.name)?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${["orders","orderDetail","trackOrder"].includes(route.name)?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconClock size={20}/>
-            {["orders","orderDetail","trackOrder"].includes(route.name) && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("orders")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: ["orders","orderDetail","trackOrder"].includes(route.name)?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${["orders","orderDetail","trackOrder"].includes(route.name)?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconClock size={17}/>
+            {["orders","orderDetail","trackOrder"].includes(route.name) && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${["orders","orderDetail","trackOrder"].includes(route.name)?"font-bold text-white":"font-medium text-white/50"}`}>History</span>
+          <span className={`text-[10px] leading-none ${["orders","orderDetail","trackOrder"].includes(route.name)?"font-bold text-white":"font-medium text-white/50"}`}>History</span>
         </button>
-        <button onClick={()=>navigate("profile")} className="flex flex-col items-center gap-1.5 px-4 py-2 rounded-2xl transition-all" style={{background: route.name==="profile"?"rgba(15,122,59,0.15)":"transparent"}}>
-          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-all ${route.name==="profile"?"bg-[#0f7a3b] text-white shadow-[0_2px_12px_rgba(15,122,59,0.4)]":"text-white/50"}`}>
-            <IconUser size={20}/>
-            {route.name==="profile" && <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
+        <button onClick={()=>navigate("profile")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{background: route.name==="profile"?"rgba(15,122,59,0.15)":"transparent"}}>
+          <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${route.name==="profile"?"bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]":"text-white/50"}`}>
+            <IconUser size={17}/>
+            {route.name==="profile" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
-          <span className={`text-[11px] leading-none ${route.name==="profile"?"font-bold text-white":"font-medium text-white/50"}`}>Profile</span>
+          <span className={`text-[10px] leading-none ${route.name==="profile"?"font-bold text-white":"font-medium text-white/50"}`}>Profile</span>
         </button>
       </div>
     </div>
