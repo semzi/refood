@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { AppProvider, useApp } from "./context/AppContext";
 import { categories } from "./data/demoData";
 
@@ -123,12 +123,12 @@ function BusinessShell({path, navigate}){
           </div>
         </aside>
         <div className="flex-1 min-w-0 w-full overflow-hidden">
-          <div className="min-h-[56px] flex items-center justify-between gap-2 px-3 sm:px-4 lg:px-8 py-2 bg-white border-b border-[#eef3ec] sticky top-0 z-10">
-            <span className="font-bold text-sm sm:text-[15px] text-[#0f2815] hidden lg:block truncate">Business • Mama B Kitchen</span>
-            <span className="lg:hidden flex items-center gap-2 font-bold text-[#0f2815] text-sm"><span className="w-7 h-7 bg-[#0f2815] rounded-lg grid place-items-center text-white"><IconLeaf size={14}/></span> ReFood Business</span>
+          <div className="min-h-[56px] flex items-center justify-between gap-2 px-3 sm:px-4 lg:px-8 py-2 border-b border-[#eef3ec] sticky top-0 z-10 bg-[#f7f8f6]/80 backdrop-blur-xl">
+            <span className="font-extrabold text-[20px] tracking-[-0.06em] text-[#0f2815] hidden lg:block">ReFood</span>
+            <span className="lg:hidden font-extrabold text-[20px] tracking-[-0.06em] text-[#0f2815]">ReFood</span>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="hidden md:inline text-xs font-bold bg-[#eef6ec] text-[#157a3b] px-3 py-1 rounded-full border border-[#c8e0c8]">Verified Partner</span>
-              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=100&h=100&fit=crop" alt="" className="w-8 h-8 rounded-full object-cover"/>
+              <span className="hidden md:inline text-[11px] font-bold bg-[#0f7a3b]/10 text-[#0f7a3b] px-2.5 py-1 rounded-full">Verified</span>
+              <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=MamaB&backgroundColor=b6e3f4,c0aede`} alt="" className="w-8 h-8 rounded-full bg-[#eef3ec]"/>
             </div>
           </div>
           <main className="px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8 pb-28 sm:pb-6 w-full max-w-full overflow-hidden">
@@ -343,8 +343,7 @@ function CustomerShell(){
         <aside className="hidden lg:flex w-[264px] shrink-0 bg-white flex-col sticky top-0 h-screen">
           <div className="p-7 flex-1 overflow-y-auto">
             <div className="flex items-center gap-2.5">
-              <span className="w-8 h-8 bg-[#0f7a3b] rounded-xl grid place-items-center text-white"><IconLeaf size={16}/></span>
-              <span className="font-bold text-[19px] tracking-tight text-[#0f2815]">ReFood</span>
+              <span className="font-extrabold text-[22px] tracking-[-0.06em] text-[#0f2815]">ReFood</span>
             </div>
             <p className="text-[12px] leading-[1.55] mt-2 text-[#5a6b5a] font-medium">Good food. Less waste.<br/>Stronger communities.</p>
             <nav className="mt-8 space-y-1.5">
@@ -449,36 +448,66 @@ function BusinessMobileNav({label, active, onClick, icon}){
   )
 }
 function TopBar(){
-  const {currentUser, navigate, orders}=useApp();
+  const {currentUser, navigate, orders, notifications, setNotifications}=useApp();
   const activeOrders = orders.filter(o=>!["completed","delivered","cancelled"].includes(o.status)).length;
+  const unread = notifications.filter(n=>!n.read).length;
+  const [openNoti,setOpenNoti]=useState(false);
+  const notiRef=useRef(null);
+  useEffect(()=>{
+    const close=(e)=>{ if(notiRef.current && !notiRef.current.contains(e.target)) setOpenNoti(false); };
+    document.addEventListener("mousedown",close);
+    return ()=>document.removeEventListener("mousedown",close);
+  },[]);
+  const dicebear = (seed)=> `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc`;
   return (
-    <div className="min-h-[60px] sm:min-h-[68px] flex items-center justify-between gap-2 px-3 sm:px-4 lg:px-8 py-2 bg-[#f7f8f6] sticky top-0 z-10">
-      <div className="flex items-center gap-2 text-sm lg:hidden font-bold text-[#0f7a3b]"><span className="w-7 h-7 bg-[#0f7a3b] rounded-lg grid place-items-center text-white"><IconLeaf size={14}/></span> ReFood</div>
-      <div className="hidden lg:block"></div>
-      <div className="flex items-center gap-2.5">
-        {/* Location pill */}
-        <div className="hidden md:flex items-center gap-1.5 bg-white rounded-full pl-2 pr-3 py-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-[#eef3ec]">
-          <span className="w-7 h-7 rounded-full bg-[#f1f6ef] grid place-items-center text-[#157a3b] shrink-0"><IconMapPin size={13}/></span>
-          <span className="font-bold text-[13px] text-[#0f2815] pr-1">Abuja, Nigeria</span>
-          <span className="text-[#8aa08a]"><IconChevronDown size={14}/></span>
+    <div className="min-h-[56px] sm:min-h-[64px] flex items-center justify-between gap-3 px-4 sm:px-5 lg:px-8 py-2 sticky top-0 z-20 bg-[#f7f8f6]/80 backdrop-blur-xl">
+      <div className="flex items-center gap-1">
+        <span className="text-[22px] sm:text-[26px] font-extrabold tracking-[-0.06em] text-[#0f2815]">ReFood</span>
+      </div>
+      <div className="flex items-center gap-1 sm:gap-2">
+        {/* Location - no bg */}
+        <div className="hidden md:flex items-center gap-1 text-[13px] font-semibold text-[#5a6b5a]">
+          <IconMapPin size={14} className="text-[#0f7a3b]"/>
+          <span>Abuja</span>
         </div>
-        {/* Middle pill: location/bell + 1 active badge like screenshot */}
-        <button onClick={()=>navigate("orders")} className="hidden md:flex items-center gap-2 bg-white rounded-full pl-1.5 pr-1.5 py-1 shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-[#eef3ec] hover:shadow-md transition">
-          <span className="w-7 h-7 rounded-full bg-white border border-[#eef3ec] grid place-items-center text-[#3a4a3a] relative shrink-0">
-            <IconMapPin size={13}/>
-            {activeOrders>0 && <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#157a3b] rounded-full border-2 border-white"></span>}
-          </span>
-          <span className="bg-[#157a3b] text-white text-[12px] font-bold px-3.5 py-1 rounded-full">{activeOrders} active</span>
+        <span className="hidden md:block w-[1px] h-4 bg-[#d6e2d6]"></span>
+        {/* Notifications bell - dropdown */}
+        <div className="relative" ref={notiRef}>
+          <button onClick={()=>setOpenNoti(!openNoti)} className="relative w-9 h-9 grid place-items-center rounded-full hover:bg-[#eef3ec] transition text-[#3a4a3a]">
+            <IconBell size={19}/>
+            {unread>0 && <span className="absolute top-1 right-1 w-2 h-2 bg-[#0f7a3b] rounded-full ring-2 ring-[#f7f8f6]"></span>}
+          </button>
+          {openNoti && (
+            <div className="absolute right-0 top-full mt-2 w-[320px] sm:w-[360px] bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#eef3ec] overflow-hidden z-50">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-[#eef3ec]">
+                <span className="font-bold text-[14px] text-[#0f2815]">Notifications</span>
+                <button onClick={()=>{setNotifications(prev=>prev.map(n=>({...n,read:true})));}} className="text-[12px] font-bold text-[#0f7a3b]">Mark all read</button>
+              </div>
+              <div className="max-h-[320px] overflow-y-auto">
+                {notifications.length===0 && <p className="text-center text-[13px] text-[#8aa08a] py-8 font-medium">No notifications yet</p>}
+                {notifications.map(n=>(
+                  <div key={n.id} className={`px-4 py-3 flex gap-3 hover:bg-[#f7f8f6] transition cursor-pointer ${!n.read?"bg-[#f0f7f0]":""}`}>
+                    <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${!n.read?"bg-[#0f7a3b]":"bg-transparent"}`}></span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-bold text-[#0f2815] leading-tight">{n.title}</p>
+                      <p className="text-[12px] text-[#5a6b5a] mt-0.5 leading-snug">{n.body}</p>
+                      <p className="text-[11px] text-[#8aa08a] mt-1">{n.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button onClick={()=>{setOpenNoti(false);navigate("notifications");}} className="w-full text-center py-2.5 text-[13px] font-bold text-[#0f7a3b] border-t border-[#eef3ec] hover:bg-[#f7f8f6] transition">View all</button>
+            </div>
+          )}
+        </div>
+        {/* Active orders - no bg */}
+        <button onClick={()=>navigate("orders")} className="hidden sm:flex items-center gap-1.5 text-[13px] font-bold text-[#0f2815] hover:text-[#0f7a3b] transition">
+          {activeOrders>0 && <span className="bg-[#0f7a3b] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">{activeOrders} active</span>}
         </button>
-        {/* Mobile active badge */}
-        <button onClick={()=>navigate("orders")} className="md:hidden relative w-9 h-9 grid place-items-center rounded-full bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-[#eef3ec] text-[#0f2815]">
-          <IconMapPin size={16}/>{activeOrders>0 && <span className="absolute -top-1 -right-1 bg-[#157a3b] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{activeOrders}</span>}
-        </button>
-        {/* Profile pill */}
-        <button onClick={()=>navigate("profile")} className="flex items-center gap-2 bg-white rounded-full pl-1 pr-3 py-1 shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-[#eef3ec] hover:shadow-md transition">
-          <img src={currentUser.avatar} alt="avatar" className="w-7 h-7 rounded-full object-cover"/>
-          <span className="hidden md:inline text-[13px] font-bold text-[#0f2815]">{currentUser.name}</span>
-          <span className="hidden md:inline text-[#8aa08a]"><IconChevronDown size={14}/></span>
+        {/* Profile */}
+        <button onClick={()=>navigate("profile")} className="flex items-center gap-2 hover:opacity-80 transition">
+          <img src={dicebear(currentUser.name)} alt="avatar" className="w-8 h-8 rounded-full bg-[#eef3ec]"/>
+          <span className="hidden lg:inline text-[13px] font-bold text-[#0f2815]">{currentUser.name}</span>
         </button>
       </div>
     </div>
@@ -516,7 +545,7 @@ function Welcome(){
     <div className="min-h-screen grid place-items-center bg-[#f7f8f6] p-6">
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center bg-white rounded-[28px] p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
         <div>
-          <div className="flex items-center gap-2 text-[#0f7a3b] font-bold text-xl"><span className="w-8 h-8 bg-[#0f7a3b] rounded-xl grid place-items-center text-white"><IconLeaf size={16}/></span> ReFood</div>
+          <div className="font-extrabold text-[28px] tracking-[-0.06em] text-[#0f2815]">ReFood</div>
           <h1 className="text-[38px] font-bold leading-[0.95] tracking-tight mt-6 text-[#0f2815]">Good food.<br/><span className="text-[#0f7a3b]">Less waste.</span><br/>Stronger communities.</h1>
           <p className="text-[15px] leading-relaxed text-[#3a4a3a] mt-4 max-w-[420px]">Join the surplus marketplace connecting Abuja with affordable, quality food while reducing waste.</p>
           <div className="mt-7 grid grid-cols-2 gap-3">
@@ -1419,11 +1448,12 @@ function Notifications(){
 }
 function Profile(){
   const {currentUser,navigate,orders,favorites}=useApp();
+  const dicebear = (seed)=> `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc`;
   return (
     <div className="max-w-[560px] space-y-4">
       <h1 className="text-[26px] font-bold tracking-tight text-[#0f2815]">Profile</h1>
       <div className="bg-white rounded-2xl p-4 flex gap-3 items-center shadow-[0_2px_16px_rgba(0,0,0,0.06)] border border-[#eef3ec]">
-        <img src={currentUser.avatar} alt="avatar" className="w-12 h-12 rounded-xl object-cover shrink-0"/>
+        <img src={dicebear(currentUser.avatar)} alt="avatar" className="w-12 h-12 rounded-xl bg-[#eef3ec] shrink-0"/>
         <div className="min-w-0">
           <p className="font-bold text-[14px] text-[#0f2815] leading-tight">{currentUser.name}</p>
           <p className="text-[12.5px] text-[#5a6b5a] font-medium leading-tight">{currentUser.email}</p>

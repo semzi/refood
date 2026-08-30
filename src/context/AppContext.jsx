@@ -12,7 +12,7 @@ export function AppProvider({ children }) {
     if (s) try { return JSON.parse(s).role || "customer"; } catch { return "customer"; }
     return "customer";
   });
-  const [currentUser] = useState({ name: "Mercy S.", email: "mercy@example.com", phone: "070 1234 5678", avatar: "https://i.pravatar.cc/150?img=5", location: "Abuja, Nigeria" });
+  const [currentUser] = useState({ name: "Mercy S.", email: "mercy@example.com", phone: "070 1234 5678", avatar: "Mercy S.", location: "Abuja, Nigeria" });
   const [businessUser] = useState({ id: "business_001", name: "Mama B Kitchen", owner: "Mama B", email: "mama@kitchen.ng" });
 
   const [listings, setListings] = useState(() => {
