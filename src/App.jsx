@@ -565,10 +565,10 @@ function Home(){
 
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-bold text-[15px] sm:text-[16px] text-[#0f2815]">Surplus food near you</h2>
-          <button onClick={()=>navigate("browse")} className="text-[13px] font-bold text-[#0f7a3b] inline-flex items-center gap-1 shrink-0">View all <IconChevronRight size={14}/></button>
+          <h2 className="font-bold text-[15px] sm:text-[16px] text-[#0f2815]">Popular near you</h2>
+          <button onClick={()=>navigate("browse")} className="text-[12px] font-bold text-[#0f7a3b] inline-flex items-center gap-0.5 shrink-0">See all <IconChevronRight size={13}/></button>
         </div>
-        <div className="mt-3 sm:mt-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           {filtered.slice(0,4).map(l=> <FoodCard key={l.id} listing={l} />)}
         </div>
         {filtered.length===0 && <Empty text="No food found for your search." actionLabel="Clear search" onAction={()=>setQ("")} />}
@@ -588,29 +588,39 @@ function Home(){
   )
 }
 function FoodCard({listing}){
-  const {businesses,toggleFavorite,favorites,navigate}=useApp();
+  const {businesses,toggleFavorite,favorites,navigate,addToCart,cart}=useApp();
   const b = businesses.find(x=>x.id===listing.businessId);
   const discount = Math.round((1 - listing.surplusPrice/listing.originalPrice)*100);
   const fav = favorites.includes(listing.id);
+  const inCart = cart.some(c=>c.listingId===listing.id);
+  const soldOut = listing.status==="sold_out" || listing.quantity<=0;
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition">
-      <div className="relative h-[156px]">
+    <div className="bg-white rounded-xl overflow-hidden shadow-[0_1px_6px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] transition flex flex-col">
+      <div className="relative aspect-square bg-[#f7f8f6]">
         <img src={listing.image} alt={listing.name} className="w-full h-full object-cover cursor-pointer" onClick={()=>navigate("foodDetail",{id:listing.id})} />
-        <span className="absolute top-3 left-3 bg-[#0f7a3b] text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">{listing.quantity} left</span>
-        <button onClick={()=>toggleFavorite(listing.id)} className={`absolute top-3 right-3 w-8 h-8 rounded-full grid place-items-center backdrop-blur shadow-sm border ${fav?'bg-white text-red-500 border-red-100':'bg-white/90 text-[#5a6b5a] border-white'}`}><IconHeart filled={fav} size={14}/></button>
-        {listing.status==="sold_out" && <span className="absolute inset-0 bg-white/75 backdrop-blur-[1px] grid place-items-center font-bold text-red-600 text-sm">Sold out</span>}
+        {discount>=10 && <span className="absolute top-2 left-2 bg-[#0f7a3b] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">-{discount}%</span>}
+        <button onClick={()=>toggleFavorite(listing.id)} className={`absolute top-2 right-2 w-7 h-7 rounded-full grid place-items-center backdrop-blur shadow-sm border ${fav?'bg-white text-red-500 border-red-100':'bg-white/80 text-[#8aa08a] border-white/60'}`}><IconHeart filled={fav} size={13}/></button>
+        {soldOut && <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] grid place-items-center"><span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-md">Sold out</span></div>}
       </div>
-      <div className="p-4 cursor-pointer" onClick={()=>navigate("foodDetail",{id:listing.id})}>
-        <p className="font-bold text-[14px] leading-tight text-[#0f2815]">{listing.name}</p>
-        <p className="text-[12.5px] text-[#3a4a3a] mt-1 flex items-center gap-1 font-medium">{b?.name} {b?.verified && <span className="w-3 h-3 bg-[#0f7a3b] text-white rounded-full grid place-items-center shrink-0"><IconCheck size={7}/></span>}</p>
-        <div className="text-[11.5px] text-[#5a6b5a] mt-2.5 space-y-1 leading-relaxed font-medium">
-          <div className="flex items-center gap-1.5"><IconMapPin size={12}/>{listing.location}</div>
-          <div className="flex items-center gap-1.5"><IconClock size={12}/>{listing.pickupWindow}</div>
+      <div className="p-3 flex flex-col flex-1">
+        <p className="font-bold text-[13px] leading-snug text-[#0f2815] line-clamp-2 cursor-pointer" onClick={()=>navigate("foodDetail",{id:listing.id})}>{listing.name}</p>
+        <p className="text-[11px] text-[#5a6b5a] mt-1 font-medium truncate">{b?.name}</p>
+        <div className="flex items-center gap-1 mt-1.5">
+          <IconStar size={11} className="text-[#d4a017]"/>
+          <span className="text-[11px] font-bold text-[#0f2815]">{b?.rating}</span>
+          <span className="text-[10px] text-[#8aa08a]">({b?.reviews})</span>
         </div>
-        <div className="mt-3 flex items-center gap-2">
-          <span className="font-bold text-[14px] text-[#0f2815]">{formatNaira(listing.surplusPrice)}</span>
-          <span className="text-xs line-through text-[#8aa08a]">{formatNaira(listing.originalPrice)}</span>
-          <span className="ml-auto text-[11px] bg-[#eef6ec] text-[#0f7a3b] px-2 py-1 rounded-full font-bold">{discount}% OFF</span>
+        <div className="mt-auto pt-2">
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-extrabold text-[15px] text-[#0f2815]">{formatNaira(listing.surplusPrice)}</span>
+            <span className="text-[11px] line-through text-[#8aa08a]">{formatNaira(listing.originalPrice)}</span>
+          </div>
+          {!soldOut && (
+            <button onClick={(e)=>{e.stopPropagation();addToCart(listing.id,1);}} className={`mt-2 w-full py-2 rounded-lg text-[12px] font-bold transition ${inCart?'bg-[#eef6ec] text-[#0f7a3b] border border-[#c8e0c8]':'bg-[#0f7a3b] hover:bg-[#126a33] text-white'}`}>
+              {inCart?'In cart':'Add to cart'}
+            </button>
+          )}
+          {soldOut && <div className="mt-2 w-full py-2 rounded-lg text-[12px] font-bold bg-[#f7f8f6] text-[#8aa08a] text-center">Unavailable</div>}
         </div>
       </div>
     </div>
@@ -656,7 +666,7 @@ function Browse(){
           <button onClick={()=>{setQ("");setCat("All");setMaxPrice(3000);setOnlyAvailable(false);}} className="text-[#0f7a3b] font-bold text-sm">Clear filters</button>
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
         {filtered.map(l=> <FoodCard key={l.id} listing={l} />)}
       </div>
       {filtered.length===0 && <Empty text="No food found for your search." actionLabel="Clear filters" onAction={()=>{setQ("");setCat("All");}} />}
