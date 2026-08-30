@@ -836,7 +836,7 @@ function Favorites(){
     <div className="space-y-4">
       <h1 className="text-[24px] font-bold tracking-tight text-[#0f2815]">Favourites</h1>
       {favListings.length===0 ? <Empty text="No saved food yet." actionLabel="Explore surplus food" onAction={()=>navigate("browse")} /> : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
           {favListings.map(l=> <FoodCard key={l.id} listing={l} />)}
         </div>
       )}
@@ -1016,11 +1016,14 @@ function Orders(){
         <p className="text-[13px] text-[#5a6b5a] font-medium">Track your orders, pickups and deliveries</p>
       </div>
 
-      {/* Tabs like screenshot */}
-      <div className="flex gap-2 p-1 bg-white rounded-full w-fit shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-[#eef3ec]">
-        <button onClick={()=>setTab("active")} className={`px-5 py-2 rounded-full text-[13px] font-bold transition ${tab==="active"?"bg-[#157a3b] text-white shadow-sm":"text-[#5a6b5a]"}`}>Active ({active.length})</button>
-        <button onClick={()=>setTab("completed")} className={`px-5 py-2 rounded-full text-[13px] font-bold transition ${tab==="completed"?"bg-[#157a3b] text-white shadow-sm":"text-[#5a6b5a]"}`}>Completed ({completed.length})</button>
-        <button onClick={()=>setTab("cancelled")} className={`px-5 py-2 rounded-full text-[13px] font-bold transition ${tab==="cancelled"?"bg-[#157a3b] text-white shadow-sm":"text-[#5a6b5a]"}`}>Cancelled ({cancelled.length})</button>
+      {/* Tabs */}
+      <div className="flex gap-0 border-b border-[#eef3ec] overflow-x-auto no-scrollbar">
+        {[{k:"active",l:"Active",c:active.length},{k:"completed",l:"Completed",c:completed.length},{k:"cancelled",l:"Cancelled",c:cancelled.length}].map(t=>(
+          <button key={t.k} onClick={()=>setTab(t.k)} className={`relative px-4 py-3 text-[13px] font-bold whitespace-nowrap transition ${tab===t.k?"text-[#0f7a3b]":"text-[#8aa08a] hover:text-[#5a6b5a]"}`}>
+            {t.l} <span className={`ml-1 text-[11px] px-1.5 py-0.5 rounded-full font-bold ${tab===t.k?"bg-[#0f7a3b]/10 text-[#0f7a3b]":"bg-[#f1f6ef] text-[#8aa08a]"}`}>{t.c}</span>
+            {tab===t.k && <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#0f7a3b] rounded-full"></span>}
+          </button>
+        ))}
       </div>
 
       <div className="grid lg:grid-cols-[1.7fr_0.9fr] gap-6">

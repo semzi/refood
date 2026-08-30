@@ -7,6 +7,8 @@ html, body { overflow-x: hidden; max-width: 100vw; }
 h1,h2,h3 { letter-spacing: -0.02em; line-height: 1.1; }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-thumb { background: #d6e2d0; border-radius: 999px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* mobile tap targets & safe area */
 button, a { touch-action: manipulation; min-height: 0; }
