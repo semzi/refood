@@ -599,7 +599,9 @@ function FoodCard({listing}){
       <div className="relative aspect-square bg-[#f7f8f6]">
         <img src={listing.image} alt={listing.name} className="w-full h-full object-cover cursor-pointer" onClick={()=>navigate("foodDetail",{id:listing.id})} />
         {discount>=10 && <span className="absolute top-2 left-2 bg-[#0f7a3b] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">-{discount}%</span>}
-        <button onClick={()=>toggleFavorite(listing.id)} className={`absolute top-2 right-2 w-7 h-7 rounded-full grid place-items-center backdrop-blur shadow-sm border ${fav?'bg-white text-red-500 border-red-100':'bg-white/80 text-[#8aa08a] border-white/60'}`}><IconHeart filled={fav} size={13}/></button>
+        <button onClick={()=>toggleFavorite(listing.id)} className="absolute top-2 right-2 w-7 h-7 rounded-full grid place-items-center" aria-label="Favourite">
+          <IconHeart filled={fav} size={18} className={fav?"text-red-500":"text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}/>
+        </button>
         {soldOut && <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] grid place-items-center"><span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-md">Sold out</span></div>}
       </div>
       <div className="p-3 flex flex-col flex-1">
@@ -615,12 +617,11 @@ function FoodCard({listing}){
             <span className="font-extrabold text-[15px] text-[#0f2815]">{formatNaira(listing.surplusPrice)}</span>
             <span className="text-[11px] line-through text-[#8aa08a]">{formatNaira(listing.originalPrice)}</span>
           </div>
-          {!soldOut && (
+          {!soldOut ? (
             <button onClick={(e)=>{e.stopPropagation();addToCart(listing.id,1);}} className={`mt-2 w-full py-2 rounded-lg text-[12px] font-bold transition ${inCart?'bg-[#eef6ec] text-[#0f7a3b] border border-[#c8e0c8]':'bg-[#0f7a3b] hover:bg-[#126a33] text-white'}`}>
               {inCart?'In cart':'Add to cart'}
             </button>
-          )}
-          {soldOut && <div className="mt-2 w-full py-2 rounded-lg text-[12px] font-bold bg-[#f7f8f6] text-[#8aa08a] text-center">Unavailable</div>}
+          ) : <div className="mt-2 w-full py-2 rounded-lg text-[12px] font-bold bg-[#f7f8f6] text-[#8aa08a] text-center">Unavailable</div>}
         </div>
       </div>
     </div>
@@ -682,63 +683,83 @@ function FoodDetail({id}){
   const discount = Math.round((1 - listing.surplusPrice/listing.originalPrice)*100);
   const fav = favorites.includes(listing.id);
   const inCart = cart.find(c=>c.listingId===id);
+  const sameKitchen = listings.filter(l=>l.businessId===b.id && l.id!==id).slice(0,4);
+  const others = listings.filter(l=>l.businessId!==b.id && l.id!==id).slice(0,4);
   return (
-    <div className="max-w-5xl space-y-6">
-      <button onClick={()=>navigate("home")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180"/> Back</button>
-      <div className="grid md:grid-cols-[0.95fr_1.05fr] gap-0 bg-white rounded-[22px] shadow-[0_8px_30px_rgba(16,40,16,0.08)] overflow-hidden border border-[#eef3ec]">
-        <div className="p-2 bg-white flex flex-col gap-3">
-          <img src={listing.image} alt={listing.name} className="w-full h-[240px] md:h-[300px] object-cover rounded-[18px]"/>
-          {/* Info under image - redesigned like screenshot */}
-          <div className="bg-[#f7f8f6] rounded-2xl p-4 border border-[#eef3ec] space-y-2.5">
-            <p className="flex items-center gap-2.5 text-[12.5px] font-semibold text-[#0f2815]"><span className="w-7 h-7 bg-white rounded-full grid place-items-center shadow-sm text-[#5a6b5a] shrink-0"><IconMapPin size={13}/></span><span>Wuse 2, Abuja <span className="text-[#8aa08a] font-medium">• 1.2km</span> <span className="w-1 h-1 bg-[#c5d6c5] rounded-full inline-block mx-1 align-middle"></span> <span className="text-[#8aa08a] font-medium">1.2km away</span></span></p>
-            <p className="flex items-center gap-2.5 text-[12.5px] font-semibold text-[#0f2815]"><span className="w-7 h-7 bg-white rounded-full grid place-items-center shadow-sm text-[#5a6b5a] shrink-0"><IconClock size={13}/></span>{listing.pickupWindow}</p>
-            <p className="flex items-center gap-2.5 text-[12.5px] font-semibold text-[#0f2815]"><span className="w-7 h-7 bg-white rounded-full grid place-items-center shadow-sm text-[#5a6b5a] shrink-0"><IconPackage size={13}/></span><span>{listing.quantity} left <span className="w-1 h-1 bg-[#c5d6c5] rounded-full inline-block mx-1 align-middle"></span> {listing.delivery? "Delivery available" : "Pickup only"} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full inline-block mx-1 align-middle"></span> {listing.category}</span></p>
-          </div>
+    <div className="space-y-6">
+      <button onClick={()=>navigate(-1)} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180"/> Back</button>
+
+      <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <div className="relative">
+          <img src={listing.image} alt={listing.name} className="w-full h-[260px] sm:h-[320px] object-cover"/>
+          <button onClick={()=>toggleFavorite(id)} className="absolute top-3 right-3 w-9 h-9 rounded-full grid place-items-center" aria-label="Favourite">
+            <IconHeart filled={fav} size={20} className={fav?"text-red-500":"text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]"}/>
+          </button>
         </div>
-        <div className="flex flex-col p-5 md:p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <h1 className="text-[22px] md:text-[24px] font-bold tracking-tight text-[#0f2815] leading-[1.15]">{listing.name}</h1>
-              <button onClick={()=>navigate("businessProfile",{id:b.id})} className="mt-1.5 inline-flex flex-wrap items-center gap-1 text-[12.5px] font-semibold text-[#3a4a3a] hover:text-[#0f7a3b] transition">
-                <span>{b.name}</span><span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span><span>{b.location}</span><span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span><span className="inline-flex items-center gap-1 font-bold text-[#0f2815]"><IconStar size={11} className="text-[#d4a017]"/>{b.rating}</span>
+        <div className="p-4 sm:p-5 space-y-4">
+          <div className="flex flex-wrap items-center gap-2 text-[12px] font-semibold text-[#5a6b5a]">
+            <span className="inline-flex items-center gap-1.5 bg-[#f7f8f6] rounded-full px-3 py-1.5 border border-[#eef3ec]"><IconMapPin size={12}/>{b.location} • {listing.location.split('•')[1]?.trim() || '1.2km'}</span>
+            <span className="inline-flex items-center gap-1.5 bg-[#f7f8f6] rounded-full px-3 py-1.5 border border-[#eef3ec]"><IconClock size={12}/>{listing.pickupWindow}</span>
+            <span className="inline-flex items-center gap-1.5 bg-[#f7f8f6] rounded-full px-3 py-1.5 border border-[#eef3ec]">{listing.quantity} left • {listing.delivery?"Delivery • ":"Pickup only • "}{listing.category}</span>
+          </div>
+
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h1 className="text-[22px] sm:text-[24px] font-bold tracking-tight text-[#0f2815] leading-[1.15]">{listing.name}</h1>
+              <button onClick={()=>navigate("businessProfile",{id:b.id})} className="mt-1.5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#3a4a3a] hover:text-[#0f7a3b] transition">
+                {b.name} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {b.location} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> <IconStar size={11} className="text-[#d4a017]"/> {b.rating}
               </button>
-              <p className="text-[13.5px] leading-[1.65] text-[#5a6b5a] mt-3 font-normal line-clamp-3">{listing.description}</p>
             </div>
-            <button onClick={()=>toggleFavorite(id)} aria-label="Favourite" className={`w-9 h-9 rounded-full grid place-items-center shadow-[0_2px_8px_rgba(0,0,0,0.08)] shrink-0 border ${fav?'bg-[#fff1f1] text-[#e03a3a] border-[#f3d1d1]':'bg-white text-[#8aa08a] border-[#eef3ec] hover:text-[#e03a3a] hover:border-[#f3d1d1]'}`}><IconHeart filled={fav} size={16}/></button>
           </div>
 
-          <div className="mt-5 flex items-center gap-2.5">
-            <span className="text-[26px] font-extrabold tracking-tight text-[#0f2815] leading-none">{formatNaira(listing.surplusPrice)}</span>
-            <span className="text-[13px] line-through text-[#8aa08a] font-medium mt-1">{formatNaira(listing.originalPrice)}</span>
-            <span className="bg-[#e6f4ea] text-[#157a3b] px-2.5 py-1 rounded-full text-[11px] font-extrabold tracking-wide border border-[#c8e0c8]">{discount}% OFF</span>
+          <p className="text-[13.5px] leading-[1.7] text-[#5a6b5a]">{listing.description}</p>
+
+          <div className="flex items-baseline gap-2.5">
+            <span className="text-[28px] font-extrabold tracking-tight text-[#0f2815]">{formatNaira(listing.surplusPrice)}</span>
+            <span className="text-[14px] line-through text-[#8aa08a]">{formatNaira(listing.originalPrice)}</span>
+            <span className="bg-[#e6f4ea] text-[#157a3b] px-2.5 py-1 rounded-full text-[11px] font-extrabold border border-[#c8e0c8]">{discount}% OFF</span>
           </div>
 
-          {listing.status==="sold_out" ? <p className="mt-5 font-bold text-red-600 bg-red-50 rounded-xl p-3 text-center border border-red-100">Sold out — Offer ended</p> : (
-            <div className="mt-auto pt-5 space-y-3">
+          {listing.status!=="sold_out" && listing.quantity>0 ? (
+            <>
               <div className="flex items-center gap-3">
                 <div className="flex items-center bg-white border border-[#e2ece2] rounded-full p-1 shadow-sm">
                   <button onClick={()=>setQty(Math.max(1,qty-1))} className="w-8 h-8 rounded-full bg-[#f7f8f6] hover:bg-[#eef3ec] grid place-items-center text-[#0f2815] font-bold transition">−</button>
                   <span className="px-5 text-[14px] font-bold text-[#0f2815] min-w-[40px] text-center">{qty}</span>
                   <button onClick={()=>setQty(Math.min(listing.quantity,qty+1))} className="w-8 h-8 rounded-full bg-[#0f2815] hover:bg-black text-white grid place-items-center font-bold transition">+</button>
                 </div>
-                <span className="text-xs font-semibold text-[#5a6b5a] bg-[#f1f6ef] px-2.5 py-1 rounded-full border border-[#d4e6d4]">{listing.quantity} available</span>
+                <span className="text-[12px] font-semibold text-[#5a6b5a]">{listing.quantity} available</span>
               </div>
-              <button onClick={()=>{for(let i=0;i<qty;i++) addToCart(id,1);}} className="w-full bg-[#157a3b] hover:bg-[#126a33] text-white py-3.5 rounded-full font-bold shadow-[0_4px_16px_rgba(21,122,59,0.25)] transition">Add to cart • {formatNaira(listing.surplusPrice*qty)}</button>
-              <div className="grid grid-cols-2 gap-2.5">
-                <button onClick={()=>{addToCart(id,1);navigate("cart");}} className="border border-[#d6e2d6] py-3 rounded-full font-bold text-[13.5px] bg-white text-[#0f2815] hover:bg-[#f7f8f6] transition">Go to cart</button>
-                <button onClick={()=>{addToCart(id,qty);navigate("checkout");}} className="bg-[#0f2815] hover:bg-black text-white py-3 rounded-full font-bold text-[13.5px] transition">Buy now</button>
+              <button onClick={()=>{for(let i=0;i<qty;i++) addToCart(id,1);}} className="w-full bg-[#0f7a3b] hover:bg-[#126a33] text-white py-3.5 rounded-xl font-bold text-[15px] shadow-[0_4px_16px_rgba(15,122,59,0.25)] transition">Add to cart • {formatNaira(listing.surplusPrice*qty)}</button>
+              <div className="grid grid-cols-2 gap-3">
+                <button onClick={()=>{addToCart(id,1);navigate("cart");}} className="border border-[#d6e2d6] py-3 rounded-xl font-bold text-[13.5px] bg-white text-[#0f2815] hover:bg-[#f7f8f6] transition">Go to cart</button>
+                <button onClick={()=>{addToCart(id,qty);navigate("checkout");}} className="bg-[#0f2815] hover:bg-black text-white py-3 rounded-xl font-bold text-[13.5px] transition">Buy now</button>
               </div>
-              {inCart && <p className="text-xs text-center text-[#157a3b] font-bold bg-[#eef6ec] py-1.5 rounded-full border border-[#d4e6d4]">{inCart.qty} in cart — <button onClick={()=>navigate("cart")} className="underline">View cart</button></p>}
-            </div>
+              {inCart && <p className="text-xs text-center text-[#157a3b] font-bold bg-[#eef6ec] py-2 rounded-xl border border-[#d4e6d4]">{inCart.qty} in cart — <button onClick={()=>navigate("cart")} className="underline">View cart</button></p>}
+            </>
+          ) : (
+            <p className="font-bold text-red-600 bg-red-50 rounded-xl p-3 text-center border border-red-100">Sold out — Offer ended</p>
           )}
         </div>
       </div>
-      <div>
-        <h3 className="font-bold text-[#0f2815]">More from {b.name}</h3>
-        <div className="grid sm:grid-cols-3 gap-5 mt-3">
-          {listings.filter(l=>l.businessId===b.id && l.id!==id).slice(0,3).map(l=> <FoodCard key={l.id} listing={l} />)}
+
+      {sameKitchen.length>0 && (
+        <div>
+          <h3 className="font-bold text-[16px] text-[#0f2815]">More from {b.name}</h3>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            {sameKitchen.map(l=> <FoodCard key={l.id} listing={l} />)}
+          </div>
         </div>
-      </div>
+      )}
+
+      {others.length>0 && (
+        <div>
+          <h3 className="font-bold text-[16px] text-[#0f2815]">You might also like</h3>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            {others.map(l=> <FoodCard key={l.id} listing={l} />)}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
