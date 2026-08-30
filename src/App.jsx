@@ -390,8 +390,8 @@ function CustomerShell(){
             <span className={`text-[10px] leading-none ${route.name==="favorites"?"font-bold text-white":"font-medium text-white/50"}`}>Favourites</span>
           </button>
           {/* Center Discover - raised */}
-          <div className="flex flex-col items-center -mt-5 mb-0">
-            <button onClick={()=>navigate("browse")} className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-[0_4px_20px_rgba(15,122,59,0.4)] ${route.name==="browse"?"bg-white text-[#0f7a3b] scale-110":"bg-[#0f7a3b] text-white"}`}>
+          <div className="flex flex-col items-center -mt-7 mb-0">
+            <button onClick={()=>navigate("browse")} className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-[0_4px_20px_rgba(0,0,0,0.15)] ${route.name==="browse"?"bg-[#0f7a3b] text-white scale-110 shadow-[0_4px_20px_rgba(15,122,59,0.4)]":"bg-white text-[#0f7a3b]"}`}>
               <IconSearch size={22}/>
             </button>
             <span className={`text-[10px] leading-none mt-1 ${route.name==="browse"?"font-bold text-white":"font-medium text-white/70"}`}>Discover</span>
