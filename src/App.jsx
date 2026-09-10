@@ -4,52 +4,67 @@ import { categories } from "./data/demoData";
 
 function formatNaira(n) { return "₦" + n.toLocaleString(); }
 
-// --- Solid Icon set (no emojis) ---
-const IconLeaf = ({ size = 16, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true"><path d="M12 2C8 2 4 5.5 4 10c0 3.5 2.2 6.5 8 10 5.8-3.5 8-6.5 8-10 0-4.5-4-8-8-8zm0 14c-1.5-1.1-4-3.2-4-6 0-2.2 1.7-4 4-4 1.1 0 2.2.5 2.9 1.3A3.9 3.9 0 0 1 16 10c0 2.8-2.5 4.9-4 6z" /></svg>
+import {
+  Leaf, Bell, Search, MapPin, Clock, Heart, Check, ChevronDown, ChevronRight,
+  Package, Bike, Home as HomeIcon, LayoutGrid, ClipboardList, Store, User, Star, Utensils,
+  ShieldCheck, Truck, Share2, Sparkles, Info, ShoppingCart, CreditCard, Landmark,
+  Upload, Pencil, Mail, Phone, Camera, LogOut, Globe, CircleHelp, Headset, Sprout,
+  BadgeCheck, ArrowRight,
+} from "lucide-react";
+
+// --- Lucide icons: uniform sizes (ICON_SIZE = 20, small meta = 16) ---
+const ICON_SIZE = 20;
+const ICON_SM = 16;
+const IconLeaf = ({ size = ICON_SIZE, className = "" }) => (<Leaf size={size} className={className} />);
+const IconBell = ({ size = ICON_SIZE, className = "" }) => (<Bell size={size} className={className} />);
+const IconSearch = ({ size = ICON_SIZE, className = "" }) => (<Search size={size} className={className} />);
+const IconMapPin = ({ size = ICON_SIZE, className = "" }) => (<MapPin size={size} className={className} />);
+const IconClock = ({ size = ICON_SIZE, className = "" }) => (<Clock size={size} className={className} />);
+const IconHeart = ({ filled, size = ICON_SIZE, className = "" }) => (<Heart size={size} className={className} fill={filled ? "currentColor" : "none"} />);
+const IconCheck = ({ size = ICON_SM, className = "" }) => (<Check size={size} className={className} strokeWidth={3} />);
+const IconChevronDown = ({ size = ICON_SIZE, className = "" }) => (<ChevronDown size={size} className={className} />);
+const IconChevronRight = ({ size = ICON_SIZE, className = "" }) => (<ChevronRight size={size} className={className} />);
+const IconPackage = ({ size = ICON_SIZE, className = "" }) => (<Package size={size} className={className} />);
+const IconBike = ({ size = ICON_SIZE, className = "" }) => (<Bike size={size} className={className} />);
+const IconHome = ({ size = ICON_SIZE, className = "" }) => (<HomeIcon size={size} className={className} />);
+const IconGrid = ({ size = ICON_SIZE, className = "" }) => (<LayoutGrid size={size} className={className} />);
+const IconClipboard = ({ size = ICON_SIZE, className = "" }) => (<ClipboardList size={size} className={className} />);
+const IconStore = ({ size = ICON_SIZE, className = "" }) => (<Store size={size} className={className} />);
+const IconUser = ({ size = ICON_SIZE, className = "" }) => (<User size={size} className={className} />);
+const IconStar = ({ size = ICON_SM, className = "" }) => (<Star size={size} className={className} fill="currentColor" strokeWidth={0} />);
+const IconUtensils = ({ size = ICON_SIZE, className = "" }) => (<Utensils size={size} className={className} />);
+const IconShield = ({ size = ICON_SIZE, className = "" }) => (<ShieldCheck size={size} className={className} />);
+const IconTruck = ({ size = ICON_SIZE, className = "" }) => (<Truck size={size} className={className} />);
+const IconShare = ({ size = ICON_SIZE, className = "" }) => (<Share2 size={size} className={className} />);
+const IconSparkles = ({ size = ICON_SIZE, className = "" }) => (<Sparkles size={size} className={className} />);
+const IconInfo = ({ size = ICON_SIZE, className = "" }) => (<Info size={size} className={className} />);
+const IconCart = ({ size = ICON_SIZE, className = "" }) => (<ShoppingCart size={size} className={className} />);
+const IconCard = ({ size = ICON_SIZE, className = "" }) => (<CreditCard size={size} className={className} />);
+const IconBank = ({ size = ICON_SIZE, className = "" }) => (<Landmark size={size} className={className} />);
+const IconUpload = ({ size = ICON_SIZE, className = "" }) => (<Upload size={size} className={className} />);
+const IconEdit = ({ size = ICON_SIZE, className = "" }) => (<Pencil size={size} className={className} />);
+const IconMail = ({ size = ICON_SIZE, className = "" }) => (<Mail size={size} className={className} />);
+const IconPhone = ({ size = ICON_SIZE, className = "" }) => (<Phone size={size} className={className} />);
+const IconCamera = ({ size = ICON_SM, className = "" }) => (<Camera size={size} className={className} />);
+const IconLogout = ({ size = ICON_SIZE, className = "" }) => (<LogOut size={size} className={className} />);
+const IconGlobe = ({ size = ICON_SIZE, className = "" }) => (<Globe size={size} className={className} />);
+const IconHelp = ({ size = ICON_SIZE, className = "" }) => (<CircleHelp size={size} className={className} />);
+const IconHeadset = ({ size = ICON_SIZE, className = "" }) => (<Headset size={size} className={className} />);
+const IconSprout = ({ size = ICON_SIZE, className = "" }) => (<Sprout size={size} className={className} />);
+const IconBadgeCheck = ({ size = ICON_SM, className = "" }) => (<BadgeCheck size={size} className={className} />);
+const IconArrowRight = ({ size = ICON_SIZE, className = "" }) => (<ArrowRight size={size} className={className} />);
+// Hero banners (public/). Add more paths here — the carousel fades every 5s.
+const BANNERS = ["re%20food.png", "re%20food%20(1).png"].map(f => `/${f}`);
+// SDG 12 – Responsible Consumption & Production wheel
+const IconSDG = ({ size = 28 }) => (
+  <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
+    <rect x="2" y="2" width="44" height="44" rx="6" fill="#BF8B2E" />
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#fff" strokeWidth="2.4" />
+    <circle cx="24" cy="24" r="4.5" fill="none" stroke="#fff" strokeWidth="2" />
+    <path d="M24 13v-4M24 39v-4M13 24H9M39 24h-4M16.3 16.3l-2.8-2.8M34.5 34.5l-2.8-2.8M31.7 16.3l2.8-2.8M13.5 34.5l2.8-2.8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+    <text x="24" y="44" textAnchor="middle" fontSize="7" fontWeight="800" fill="#fff" fontFamily="sans-serif">12</text>
+  </svg>
 );
-const IconBell = ({ size = 18 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 7-6 7-6 11 0-4-6-4-6-11z" /><path d="M9 21a3 3 0 0 0 6 0" /></svg>
-);
-const IconSearch = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"><circle cx="11" cy="11" r="7" /><path d="M20 20L15.5 15.5" /></svg>
-);
-const IconMapPin = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" fill="currentColor" stroke="none" /></svg>
-);
-const IconClock = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
-);
-const IconHeart = ({ filled, size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8"><path d="M19.5 6.5c-1.2-1.4-3.2-1.6-4.6-.4L12 8.8 9.1 6.1c-1.4-1.2-3.4-1-4.6.4-1.2 1.5-1 3.7.5 4.9l7 6 7-6c1.5-1.2 1.7-3.4.5-4.9z" /></svg>
-);
-const IconCheck = ({ size = 12 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7" /></svg>
-);
-const IconChevronDown = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 9l6 6 6-6" /></svg>
-);
-const IconChevronRight = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 6l6 6-6 6" /></svg>
-);
-const IconPackage = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
-);
-const IconBike = ({ size = 18 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="5" cy="18" r="3" /><circle cx="19" cy="18" r="3" /><path d="M5 18l3-7h6l2 4h3" /><path d="M8 11l2-3h4" /><circle cx="12" cy="8" r="1" fill="currentColor" stroke="none" /></svg>
-);
-const IconHome = ({ size = 16, className = "" }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}><path d="M3 10L12 3l9 7v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1v-9z" /></svg>);
-const IconGrid = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>);
-const IconClipboard = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 5h6a1 1 0 0 1 1 1v1H8V6a1 1 0 0 1 1-1z" /><rect x="5" y="6" width="14" height="15" rx="2" /></svg>);
-const IconStore = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 9l1-5h16l1 5" /><path d="M3 9h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" /><path d="M8 13h2v5H8zM14 13h2v5h-2z" /></svg>);
-const IconUser = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="4" /><path d="M5 20a7 7 0 0 1 14 0" /></svg>);
-const IconStar = ({ size = 14 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7H22l-6.2 4.5 2.4 7L12 16l-6.2 4.5 2.4-7L2 9h7.6z" /></svg>);
-const IconUtensils = ({ size = 20 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M8 2v7" /><path d="M12 2v7" /><path d="M16 2a2 2 0 0 1 2 2v7a4 4 0 0 1-4 4h-1" /><path d="M6 13a4 4 0 0 0 4 4h2" /></svg>);
-const IconShield = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" /></svg>);
-const IconTruck = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="1" y="3" width="15" height="13" rx="1" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>);
-const IconShare = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>);
-const IconSparkles = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1" /></svg>);
-const IconInfo = ({ size = 16 }) => (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>);
 
 
 function Shell() {
@@ -86,7 +101,7 @@ function BusinessLogin({ onLogin }) {
     <div className="min-h-screen bg-[#f7f8f6] grid place-items-center p-6">
       <div className="max-w-[420px] w-full bg-white rounded-[24px] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-[#eef3ec]">
         <div className="flex items-center gap-2.5 justify-center">
-          <span className="w-9 h-9 bg-[#0f7a3b] rounded-xl grid place-items-center text-white"><IconLeaf size={18} /></span>
+          <span className="w-9 h-9 bg-[#0f7a3b] rounded-xl grid place-items-center text-white"><IconLeaf size={ICON_SIZE} /></span>
           <span className="font-bold text-xl text-[#0f2815]">ReFood Business</span>
         </div>
         <h1 className="text-[22px] font-bold text-[#0f2815] text-center mt-6">Business login</h1>
@@ -111,14 +126,14 @@ function BusinessShell({ path, navigate }) {
       <aside className="hidden lg:flex w-[264px] bg-white flex-col justify-between fixed top-0 left-0 bottom-0 h-screen overflow-hidden border-r border-[#eef3ec] z-30">
         <div className="p-6">
           <div className="flex items-center gap-2.5">
-            <span className="w-9 h-9 bg-[#0f2815] rounded-xl grid place-items-center text-white"><IconLeaf size={18} /></span>
+            <span className="w-9 h-9 bg-[#0f2815] rounded-xl grid place-items-center text-white"><IconLeaf size={ICON_SIZE} /></span>
             <span className="font-extrabold text-[22px] tracking-[-0.05em] text-[#0f2815]">ReFood</span><span className="text-[11px] bg-[#0f7a3b] text-white px-2 py-0.5 rounded-full font-bold">BUSINESS</span>
           </div>
           <p className="text-[11px] mt-2 text-[#5a6b5a] font-medium">Mama B Kitchen • Business portal</p>
           <nav className="mt-6 space-y-1">
-            <button onClick={() => navigate("/business")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "overview" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconGrid size={16} /> Overview</button>
-            <button onClick={() => navigate("/business/listings")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "listings" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconStore size={16} /> Listings</button>
-            <button onClick={() => navigate("/business/orders")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "orders" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconClipboard size={16} /> Orders</button>
+            <button onClick={() => navigate("/business")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "overview" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconGrid size={ICON_SIZE} /> Overview</button>
+            <button onClick={() => navigate("/business/listings")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "listings" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconStore size={ICON_SIZE} /> Listings</button>
+            <button onClick={() => navigate("/business/orders")} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-bold flex items-center gap-2.5 ${active === "orders" ? "bg-[#0f2815] text-white" : "text-[#3a4a3a] hover:bg-[#f1f6ef]"}`}><IconClipboard size={ICON_SIZE} /> Orders</button>
           </nav>
         </div>
         <div className="p-5 border-t border-[#eef3ec]">
@@ -141,21 +156,21 @@ function BusinessShell({ path, navigate }) {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0f2815] flex justify-around items-center pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] px-2 z-30">
         <button onClick={() => navigate("/business")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{ background: active === "overview" ? "rgba(15,122,59,0.15)" : "transparent" }}>
           <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active === "overview" ? "bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]" : "text-white/50"}`}>
-            <IconGrid size={17} />
+            <IconGrid size={ICON_SIZE} />
             {active === "overview" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
           <span className={`text-[10px] leading-none ${active === "overview" ? "font-bold text-white" : "font-medium text-white/50"}`}>Overview</span>
         </button>
         <button onClick={() => navigate("/business/listings")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{ background: active === "listings" ? "rgba(15,122,59,0.15)" : "transparent" }}>
           <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active === "listings" ? "bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]" : "text-white/50"}`}>
-            <IconStore size={17} />
+            <IconStore size={ICON_SIZE} />
             {active === "listings" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
           <span className={`text-[10px] leading-none ${active === "listings" ? "font-bold text-white" : "font-medium text-white/50"}`}>Listings</span>
         </button>
         <button onClick={() => navigate("/business/orders")} className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all" style={{ background: active === "orders" ? "rgba(15,122,59,0.15)" : "transparent" }}>
           <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${active === "orders" ? "bg-[#0f7a3b] text-white shadow-[0_2px_10px_rgba(15,122,59,0.35)]" : "text-white/50"}`}>
-            <IconClipboard size={17} />
+            <IconClipboard size={ICON_SIZE} />
             {active === "orders" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#0f7a3b] rounded-full"></span>}
           </div>
           <span className={`text-[10px] leading-none ${active === "orders" ? "font-bold text-white" : "font-medium text-white/50"}`}>Orders</span>
@@ -242,6 +257,47 @@ function BusinessListingsBusiness({ navigate }) {
     </div>
   )
 }
+function ListingImageField({ value, onChange }) {
+  const fileRef = useRef(null);
+  const [dragOver, setDragOver] = useState(false);
+  const pickFile = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => onChange(reader.result);
+    reader.readAsDataURL(file);
+  };
+  return (
+    <div>
+      <p className="text-[13px] font-bold text-[#0f2815]">Food photo</p>
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => { e.preventDefault(); setDragOver(false); pickFile(e.dataTransfer.files?.[0]); }}
+        onClick={() => fileRef.current?.click()}
+        className={`mt-2 rounded-2xl border-2 border-dashed cursor-pointer overflow-hidden transition ${dragOver ? "border-[#0f7a3b] bg-[#eef6ec]" : "border-[#d4e6d4] bg-[#f7f8f6] hover:border-[#0f7a3b]/50"}`}
+      >
+        {value ? (
+          <div className="relative">
+            <img src={value} alt="listing preview" className="w-full h-44 object-cover" />
+            <span className="absolute bottom-2 right-2 bg-[#0f2815]/90 text-white text-[11px] font-bold px-3 py-1.5 rounded-full inline-flex items-center gap-1.5"><IconUpload size={ICON_SM} /> Change photo</span>
+          </div>
+        ) : (
+          <div className="py-8 px-4 text-center">
+            <span className="w-11 h-11 rounded-full bg-white shadow-sm grid place-items-center mx-auto text-[#0f7a3b]"><IconUpload size={ICON_SIZE} /></span>
+            <p className="text-[13px] font-bold text-[#0f2815] mt-2">Upload image</p>
+            <p className="text-[12px] text-[#5a6b5a] font-medium">Drag & drop or click to browse · PNG/JPG</p>
+          </div>
+        )}
+      </div>
+      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => pickFile(e.target.files?.[0])} />
+      <div className="mt-2 flex gap-2">
+        <input placeholder="…or paste image URL" value={value?.startsWith("data:") ? "" : (value || "")} onChange={e => onChange(e.target.value)} onClick={e => e.stopPropagation()} className="flex-1 bg-[#f7f8f6] rounded-xl px-4 py-2.5 text-[13px] font-medium border border-[#eef3ec] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/15" />
+        {value && <button type="button" onClick={() => onChange("")} className="text-[12px] font-bold text-red-600 bg-red-50 px-3 rounded-xl">Clear</button>}
+      </div>
+    </div>
+  );
+}
 function BusinessListingFormBusiness({ navigate, editId }) {
   const { listings, addListing, updateListing } = useApp();
   const edit = listings.find(l => l.id === editId);
@@ -256,15 +312,16 @@ function BusinessListingFormBusiness({ navigate, editId }) {
   };
   return (
     <div className="max-w-xl space-y-4">
-      <button onClick={() => navigate("/business/listings")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back</button>
+      <button onClick={() => navigate("/business/listings")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={ICON_SIZE} className="rotate-180" /> Back</button>
       <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">{edit ? "Edit listing" : "Add surplus food"}</h1>
       <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec] space-y-3">
         <input placeholder="Food name *" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/15" />
         <textarea placeholder="Description" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none" rows={3} />
         <div className="grid grid-cols-2 gap-3">
           <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none">{categories.filter(c => c !== "All").map(c => <option key={c} value={c}>{c}</option>)}</select>
-          <input placeholder="Image URL" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none" />
+          <input placeholder="Location e.g. Wuse 2, Abuja" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none" />
         </div>
+        <ListingImageField value={form.image} onChange={(v) => setForm({ ...form, image: v })} />
         <div className="grid grid-cols-3 gap-3">
           <input type="number" placeholder="Original" value={form.originalPrice} onChange={e => setForm({ ...form, originalPrice: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none" />
           <input type="number" placeholder="Surplus" value={form.surplusPrice} onChange={e => setForm({ ...form, surplusPrice: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm font-medium border border-[#eef3ec] focus:outline-none" />
@@ -288,9 +345,9 @@ function BusinessOrdersBusiness({ navigate }) {
       <div className="space-y-3">
         {my.map(o => (
           <div key={o.id} onClick={() => navigate(`/business/orders/${o.id}`)} className="bg-white rounded-2xl p-4 flex gap-3 cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-[#eef3ec] hover:shadow-md">
-            <div className="w-10 h-10 rounded-xl bg-[#f1f6ef] grid place-items-center text-[#0f7a3b]"><IconClipboard size={16} /></div>
+            <div className="w-10 h-10 rounded-xl bg-[#f1f6ef] grid place-items-center text-[#0f7a3b]"><IconClipboard size={ICON_SIZE} /></div>
             <div className="flex-1"><div className="flex items-center gap-2"><span className="font-bold text-sm text-[#0f2815]">#{o.id}</span><span className="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-bold border border-amber-200">{o.status.replaceAll("_", " ")}</span></div><p className="text-[13px] text-[#3a4a3a] mt-1 font-medium">{o.items.map(i => `${i.name} ×${i.qty}`).join(", ")} • {formatNaira(o.total)} • {o.fulfillment}</p><p className="text-xs text-[#8aa08a] font-medium">{new Date(o.createdAt).toLocaleString()}</p></div>
-            <span className="text-[#c5d6c5] self-center"><IconChevronRight size={18} /></span>
+            <span className="text-[#c5d6c5] self-center"><IconChevronRight size={ICON_SIZE} /></span>
           </div>
         ))}
         {my.length === 0 && <div className="bg-white rounded-2xl p-8 text-center shadow-[0_2px_12px_rgba(0,0,0,0.05)] border border-[#eef3ec]"><p className="text-[#3a4a3a] font-medium">No orders yet. New customer orders will appear here.</p></div>}
@@ -310,7 +367,7 @@ function BusinessOrderDetailBusiness({ navigate, id }) {
   const code = order.id.replace(/\D/g, '').slice(-7).padStart(7, '7').slice(0, 7);
   return (
     <div className="max-w-xl space-y-4">
-      <button onClick={() => navigate("/business/orders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back</button>
+      <button onClick={() => navigate("/business/orders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={ICON_SIZE} className="rotate-180" /> Back</button>
       <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">Order #{order.id}</h1>
       <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec]">
         <p className="text-sm text-[#0f2815] font-bold">Customer: Mercy S. • 070 1234 5678</p>
@@ -343,25 +400,31 @@ function CustomerShell() {
     <div className="min-h-screen bg-[#f7f8f6] text-[#1a2e1a]">
       <aside className="hidden lg:flex w-[264px] bg-white flex-col justify-between fixed top-0 left-0 bottom-0 h-screen overflow-hidden border-r border-[#eef3ec] z-30">
         <div className="p-6 pb-2">
-          <div className="flex items-center gap-2.5">
-            <span className="font-extrabold text-[28px] tracking-[-0.06em] text-[#0f2815]">ReFood</span>
+          <div className="flex items-center gap-2">
+            <span className="text-[#0f7a3b]"><IconLeaf size={30} /></span>
+            <span className="font-extrabold text-[28px] tracking-[-0.04em] text-[#0f7a3b]">ReFood</span>
           </div>
-          <p className="text-[12px] leading-[1.5] mt-1.5 text-[#5a6b5a] font-medium">Good food. Less waste.<br />Stronger communities.</p>
+          <p className="text-[12px] leading-[1.5] mt-1.5 text-[#0f2815] font-medium">Good food. Less waste.<br />Stronger communities.</p>
           <nav className="mt-6 space-y-1">
             <NavItem label="Home" icon={<IconHome />} active={route.name === "home"} onClick={() => navigate("home")} />
             <NavItem label="Browse Surplus" icon={<IconGrid />} active={route.name === "browse"} onClick={() => navigate("browse")} />
             <NavItem label="My Orders" icon={<IconClipboard />} active={["orders", "orderDetail", "trackOrder"].includes(route.name)} onClick={() => navigate("orders")} />
-            <NavItem label="Favourites" icon={<IconHeart size={15} />} active={route.name === "favorites"} onClick={() => navigate("favorites")} />
+            <NavItem label="Favourites" icon={<IconHeart size={ICON_SIZE} />} active={route.name === "favorites"} onClick={() => navigate("favorites")} />
             <NavItem label="Profile" icon={<IconUser />} active={route.name === "profile"} onClick={() => navigate("profile")} />
           </nav>
         </div>
         <div className="p-5 pt-2">
-          <div className="bg-[#f1f6ef] rounded-2xl p-4 text-center">
-            <div className="w-7 h-7 bg-white rounded-full grid place-items-center mx-auto text-[#0f7a3b]"><IconLeaf size={13} /></div>
-            <p className="text-[11px] text-[#5a6b5a] mt-1.5 font-medium">Together, we've saved</p>
-            <p className="text-[20px] font-bold text-[#0f7a3b] tracking-tight leading-tight">12,450</p>
-            <p className="text-[11px] text-[#5a6b5a] font-medium">meals from going to waste</p>
-            <p className="text-[10.5px] text-[#0f7a3b] font-semibold mt-1.5">Thank you! · Keep sharing</p>
+          <div className="bg-[#f2f7f1] rounded-2xl p-4 border border-[#eef3ec]">
+            <div className="flex items-center gap-2.5">
+              <IconSDG size={40} />
+              <span className="text-[#0f7a3b]"><IconLeaf size={ICON_SIZE} /></span>
+              <div className="flex-1">
+                <p className="text-[20px] font-extrabold text-[#0f2815] tracking-tight leading-none">12,450</p>
+                <p className="text-[11px] text-[#5a6b5a] font-medium mt-1">meals saved</p>
+              </div>
+              <span className="text-[#0f2815]"><IconChevronRight size={ICON_SM} /></span>
+            </div>
+            <p className="text-[11px] text-[#0f7a3b] font-semibold mt-3 pt-3 border-t border-[#e2ece2]">Thank you! · Keep sharing</p>
           </div>
           <button onClick={() => navigateTo("/business/login")} className="mt-2.5 w-full bg-[#0f2815] text-white py-2.5 rounded-xl text-xs font-bold hover:bg-[#163a1f] transition">Business login →</button>
           <p className="text-[10px] text-[#8aa08a] text-center mt-1 font-medium">Are you a business? Manage at /business</p>
@@ -369,7 +432,7 @@ function CustomerShell() {
       </aside>
       <div className="lg:pl-[264px] flex flex-col min-h-screen">
         <TopBar />
-        <main className="px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8 pb-20 sm:pb-20 lg:pb-8 max-w-[1100px] mx-auto w-full flex-1">
+        <main className="px-3 sm:px-4 lg:px-8 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-20 lg:pb-8 max-w-[1100px] mx-auto w-full flex-1">
           <RouterView />
         </main>
       </div>
@@ -385,14 +448,14 @@ function CustomerShell() {
           <div className="relative flex justify-around items-center px-1.5 pt-3 pb-1 z-10">
             <button onClick={() => navigate("home")} className="flex flex-col items-center justify-center gap-1 px-2.5 py-1 rounded-lg transition-all" style={{ background: route.name === "home" ? "rgba(15,122,59,0.25)" : "transparent" }}>
               <div className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all ${route.name === "home" ? "bg-[#0f7a3b] text-white shadow-xs" : "text-white/60"}`}>
-                <IconHome size={15} className={route.name === "home" ? "fill-current" : ""} />
+                <IconHome size={ICON_SIZE} className={route.name === "home" ? "fill-current" : ""} />
                 {route.name === "home" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0f7a3b] rounded-full"></span>}
               </div>
               <span className={`text-[9.5px] leading-none ${route.name === "home" ? "font-bold text-white" : "font-medium text-white/60"}`}>Home</span>
             </button>
             <button onClick={() => navigate("favorites")} className="flex flex-col items-center justify-center gap-1 px-2.5 py-1 rounded-lg transition-all" style={{ background: route.name === "favorites" ? "rgba(15,122,59,0.25)" : "transparent" }}>
               <div className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all ${route.name === "favorites" ? "bg-[#0f7a3b] text-white shadow-xs" : "text-white/60"}`}>
-                <IconHeart size={14} filled={route.name === "favorites"} />
+                <IconHeart size={ICON_SIZE} filled={route.name === "favorites"} />
                 {route.name === "favorites" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0f7a3b] rounded-full"></span>}
               </div>
               <span className={`text-[9.5px] leading-none ${route.name === "favorites" ? "font-bold text-white" : "font-medium text-white/60"}`}>Favourites</span>
@@ -408,14 +471,14 @@ function CustomerShell() {
 
             <button onClick={() => navigate("orders")} className="flex flex-col items-center justify-center gap-1 px-2.5 py-1 rounded-lg transition-all" style={{ background: ["orders", "orderDetail", "trackOrder"].includes(route.name) ? "rgba(15,122,59,0.25)" : "transparent" }}>
               <div className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all ${["orders", "orderDetail", "trackOrder"].includes(route.name) ? "bg-[#0f7a3b] text-white shadow-xs" : "text-white/60"}`}>
-                <IconClock size={14} />
+                <IconClock size={ICON_SIZE} />
                 {["orders", "orderDetail", "trackOrder"].includes(route.name) && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0f7a3b] rounded-full"></span>}
               </div>
               <span className={`text-[9.5px] leading-none ${["orders", "orderDetail", "trackOrder"].includes(route.name) ? "font-bold text-white" : "font-medium text-white/60"}`}>History</span>
             </button>
             <button onClick={() => navigate("profile")} className="flex flex-col items-center justify-center gap-1 px-2.5 py-1 rounded-lg transition-all" style={{ background: route.name === "profile" ? "rgba(15,122,59,0.25)" : "transparent" }}>
               <div className={`relative w-7 h-7 rounded-full flex items-center justify-center transition-all ${route.name === "profile" ? "bg-[#0f7a3b] text-white shadow-xs" : "text-white/60"}`}>
-                <IconUser size={14} />
+                <IconUser size={ICON_SIZE} />
                 {route.name === "profile" && <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0f7a3b] rounded-full"></span>}
               </div>
               <span className={`text-[9.5px] leading-none ${route.name === "profile" ? "font-bold text-white" : "font-medium text-white/60"}`}>Profile</span>
@@ -427,7 +490,7 @@ function CustomerShell() {
   );
 }
 function NavItem({ label, icon, active, onClick }) {
-  return <button onClick={onClick} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-semibold transition flex items-center gap-2.5 ${active ? 'bg-[#0f7a3b] text-white shadow-sm' : 'text-[#3a4a3a] hover:bg-[#f1f6ef] hover:text-[#0f2815]'}`}><span className={`${active ? 'text-white' : 'text-[#6b7f6b]'}`}>{icon}</span>{label}</button>
+  return <button onClick={onClick} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] transition flex items-center gap-2.5 ${active ? 'bg-[#e9f4e9] text-[#0f5c2e] font-bold shadow-none' : 'font-semibold text-[#0f2815] hover:bg-[#f1f6ef]'}`}><span className={`${active ? 'text-[#0f7a3b]' : 'text-[#0f2815]'}`}>{icon}</span>{label}</button>
 }
 function MobileNav({ name, label }) {
   const { route, navigate } = useApp();
@@ -461,8 +524,8 @@ function BusinessMobileNav({ label, active, onClick, icon }) {
   )
 }
 function TopBar() {
-  const { currentUser, navigate, orders, notifications, setNotifications } = useApp();
-  const activeOrders = orders.filter(o => !["completed", "delivered", "cancelled"].includes(o.status)).length;
+  const { currentUser, navigate, route, cart, notifications, setNotifications } = useApp();
+  const cartCount = cart.reduce((s, c) => s + c.qty, 0);
   const unread = notifications.filter(n => !n.read).length;
   const [openNoti, setOpenNoti] = useState(false);
   const notiRef = useRef(null);
@@ -472,23 +535,24 @@ function TopBar() {
     return () => document.removeEventListener("mousedown", close);
   }, []);
   const dicebear = (seed) => `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc`;
+  const iconBtn = "relative w-10 h-10 grid place-items-center rounded-full bg-white border border-[#eef3ec] shadow-sm hover:bg-[#eef3ec] transition text-[#0f2815]";
+  const [tq, setTq] = useState("");
   return (
     <div className="min-h-[56px] sm:min-h-[64px] flex items-center justify-between gap-3 px-4 sm:px-5 lg:px-8 py-2 sticky top-0 z-20 bg-[#f7f8f6]/80 backdrop-blur-xl">
       <div className="flex items-center gap-1 lg:hidden">
         <span className="text-[22px] sm:text-[26px] font-extrabold tracking-[-0.06em] text-[#0f2815]">ReFood</span>
       </div>
-      <div className="flex items-center gap-1 sm:gap-2 ml-auto">
-        {/* Location - no bg */}
-        <div className="hidden md:flex items-center gap-1 text-[13px] font-semibold text-[#5a6b5a]">
-          <IconMapPin size={14} className="text-[#0f7a3b]" />
-          <span>Abuja</span>
-        </div>
-        <span className="hidden md:block w-[1px] h-4 bg-[#d6e2d6]"></span>
-        {/* Notifications bell - dropdown */}
+      {/* Desktop search pill → Browse */}
+      <form onSubmit={(e) => { e.preventDefault(); navigate("browse", { q: tq }); }} className="hidden md:flex flex-1 max-w-[560px] relative">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0f2815]"><IconSearch size={ICON_SIZE} /></span>
+        <input value={tq} onChange={e => setTq(e.target.value)} placeholder="Search food, restaurants or cuisines…" className="w-full bg-white border border-[#e2ece2] rounded-full pl-11 pr-4 py-2.5 text-[13.5px] text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none focus:border-[#c8e0c8] focus:ring-4 focus:ring-[#eef6ec]" />
+      </form>
+      <div className="flex items-center gap-2 ml-auto">
+        {/* Notifications */}
         <div className="relative" ref={notiRef}>
-          <button onClick={() => setOpenNoti(!openNoti)} className="relative w-9 h-9 grid place-items-center rounded-full hover:bg-[#eef3ec] transition text-[#3a4a3a]">
-            <IconBell size={19} />
-            {unread > 0 && <span className="absolute top-1 right-1 w-2 h-2 bg-[#0f7a3b] rounded-full ring-2 ring-[#f7f8f6]"></span>}
+          <button onClick={() => setOpenNoti(!openNoti)} aria-label="Notifications" title="Notifications" className={`${iconBtn} border-transparent shadow-none hover:bg-[#eef3ec]`}>
+            <IconBell size={ICON_SIZE} />
+            {unread > 0 && <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#0f7a3b] rounded-full ring-2 ring-[#f7f8f6]"></span>}
           </button>
           {openNoti && (
             <div className="absolute right-0 top-full mt-2 w-[320px] sm:w-[360px] bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#eef3ec] overflow-hidden z-50">
@@ -513,14 +577,16 @@ function TopBar() {
             </div>
           )}
         </div>
-        {/* Active orders - no bg */}
-        <button onClick={() => navigate("orders")} className="hidden sm:flex items-center gap-1.5 text-[13px] font-bold text-[#0f2815] hover:text-[#0f7a3b] transition">
-          {activeOrders > 0 && <span className="bg-[#0f7a3b] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">{activeOrders} active</span>}
+        {/* Cart */}
+        <button onClick={() => navigate("cart")} aria-label="Cart" title="Cart" className={`${iconBtn} border-transparent shadow-none hover:bg-[#eef3ec] ${route?.name === "cart" ? "bg-[#eef3ec]" : ""}`}>
+          <IconCart size={ICON_SIZE} />
+          {cartCount > 0 && <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 bg-[#0f7a3b] text-white text-[11px] font-extrabold rounded-full grid place-items-center ring-2 ring-[#f7f8f6]">{cartCount > 99 ? "99+" : cartCount}</span>}
         </button>
         {/* Profile */}
-        <button onClick={() => navigate("profile")} className="flex items-center gap-2 hover:opacity-80 transition">
-          <img src={dicebear(currentUser.name)} alt="avatar" className="w-8 h-8 rounded-full bg-[#eef3ec]" />
-          <span className="hidden lg:inline text-[13px] font-bold text-[#0f2815]">{currentUser.name}</span>
+        <button onClick={() => navigate("profile")} className="flex items-center gap-2 hover:opacity-80 transition ml-1">
+          <img src={dicebear(currentUser.name)} alt="avatar" className="w-10 h-10 rounded-full bg-white border border-[#eef3ec] shadow-sm" />
+          <span className="hidden lg:inline text-[14px] font-bold text-[#0f2815]">Mercy S.</span>
+          <span className="hidden lg:inline text-[#0f2815]"><IconChevronDown size={ICON_SM} /></span>
         </button>
       </div>
     </div>
@@ -583,6 +649,40 @@ function Welcome() {
   )
 }
 
+// Hero banner carousel — crossfades through public/ banners every 5s.
+function HeroBanner() {
+  const { navigate } = useApp();
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (BANNERS.length < 2) return;
+    const t = setInterval(() => setIdx(i => (i + 1) % BANNERS.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="relative overflow-hidden rounded-2xl bg-[#e9f2e9] shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
+      <button onClick={() => navigate("browse")} aria-label="Browse surplus food" className="block w-full text-left">
+        <div className="grid w-full">
+          {BANNERS.map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt={i === 0 ? "Enjoy good food at a better price" : "Eat well, spend less"}
+              loading={i === 0 ? "eager" : "lazy"}
+              className={`col-start-1 row-start-1 w-full h-auto transition-opacity duration-1000 ${i === idx ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+        </div>
+      </button>
+      {BANNERS.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {BANNERS.map((src, i) => (
+            <button key={src} onClick={() => setIdx(i)} aria-label={`Banner ${i + 1}`} className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-white shadow" : "w-2 bg-white/60 hover:bg-white/90"}`} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 function Home() {
   const { listings, businesses, navigate } = useApp();
   const [q, setQ] = useState("");
@@ -590,15 +690,11 @@ function Home() {
   const filtered = useMemo(() => listings.filter(l => l.name.toLowerCase().includes(q.toLowerCase()) || businesses.find(b => b.id === l.businessId)?.name.toLowerCase().includes(q.toLowerCase())), [q, listings, businesses]);
   return (
     <div className="space-y-5 sm:space-y-7">
-      <div>
-        <h1 className="text-[22px] sm:text-[26px] font-bold tracking-tight text-[#0f2815]">Good morning, Mercy!</h1>
-        <p className="text-[13px] sm:text-[14px] text-[#3a4a3a] mt-1 font-medium">Let's reduce food waste, together.</p>
-      </div>
-
-      <div>
+      {/* Mobile search — desktop uses the TopBar search pill */}
+      <div className="md:hidden">
         <div className="relative min-w-0">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8aa08a] z-10"><IconSearch size={16} /></span>
-          <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setSearching(true)} onClick={() => setSearching(true)} placeholder="Search for food or restaurants…" className="w-full bg-white border border-[#e2ece2] rounded-full pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 text-[13px] sm:text-[14px] text-[#0f2815] placeholder:text-[#8aa08a] placeholder:font-medium focus:outline-none focus:border-[#c8e0c8] focus:ring-4 focus:ring-[#eef6ec] font-medium shadow-sm transition-all" />
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8aa08a] z-10"><IconSearch size={ICON_SIZE} /></span>
+          <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setSearching(true)} onClick={() => setSearching(true)} placeholder="Search food, restaurants or cuisines…" className="w-full bg-white border border-[#e2ece2] rounded-full pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 text-[13px] sm:text-[14px] text-[#0f2815] placeholder:text-[#8aa08a] placeholder:font-medium focus:outline-none focus:border-[#c8e0c8] focus:ring-4 focus:ring-[#eef6ec] font-medium transition-all" />
         </div>
         {!searching && <p className="text-xs text-[#5a6b5a] mt-2.5 font-medium px-1"><span className="text-[#0f7a3b] font-bold">Try:</span> Jollof rice, Suya, Pounded Yam…</p>}
       </div>
@@ -608,10 +704,10 @@ function Home() {
           <div className="bg-[#f7f8f6] min-h-screen" onClick={e => e.stopPropagation()}>
             <div className="sticky top-0 bg-[#f7f8f6]/90 backdrop-blur-xl px-4 py-3 flex items-center gap-3 border-b border-[#eef3ec]">
               <button onClick={() => { setSearching(false); setQ(""); }} className="w-9 h-9 grid place-items-center rounded-full hover:bg-[#eef3ec] transition shrink-0">
-                <IconChevronRight size={18} className="rotate-180" />
+                <IconChevronRight size={ICON_SIZE} className="rotate-180" />
               </button>
               <div className="flex-1 relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8aa08a]"><IconSearch size={16} /></span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8aa08a]"><IconSearch size={ICON_SIZE} /></span>
                 <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Search for food or restaurants…" className="w-full bg-white border border-[#e2ece2] rounded-full pl-10 pr-4 py-2.5 text-[14px] text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none focus:border-[#c8e0c8] focus:ring-4 focus:ring-[#eef6ec]" />
               </div>
             </div>
@@ -639,7 +735,7 @@ function Home() {
                             <p className="text-[11px] text-[#5a6b5a] font-medium truncate">{b?.name}</p>
                             <p className="text-[13px] font-extrabold text-[#0f2815] mt-0.5">{formatNaira(l.surplusPrice)}</p>
                           </div>
-                          <IconChevronRight size={16} className="text-[#8aa08a] shrink-0" />
+                          <IconChevronRight size={ICON_SIZE} className="text-[#8aa08a] shrink-0" />
                         </button>
                       )
                     })}
@@ -657,76 +753,62 @@ function Home() {
         </div>
       )}
 
+      <HeroBanner />
+
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-bold text-[15px] sm:text-[16px] text-[#0f2815]">Popular near you</h2>
-          <button onClick={() => navigate("browse")} className="text-[12px] font-bold text-[#0f7a3b] inline-flex items-center gap-0.5 shrink-0">See all <IconChevronRight size={13} /></button>
+          <h2 className="font-extrabold text-[17px] sm:text-[19px] text-[#0f2815] tracking-tight">Popular near you</h2>
+          <button onClick={() => navigate("browse")} className="text-[13px] font-bold text-[#0f7a3b] inline-flex items-center gap-1 shrink-0 hover:underline">See all <IconArrowRight size={ICON_SM} /></button>
         </div>
-        <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-          {filtered.slice(0, 4).map(l => <FoodCard key={l.id} listing={l} />)}
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
+          {filtered.slice(0, 8).map(l => <FoodCard key={l.id} listing={l} />)}
         </div>
         {filtered.length === 0 && <Empty text="No food found for your search." actionLabel="Clear search" onAction={() => setQ("")} />}
-      </div>
-
-      <div className="bg-white rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
-        <div className="flex items-center gap-4">
-          <div className="w-[72px] h-[64px] bg-[#f1f6ef] rounded-2xl grid place-items-center text-[#0f7a3b]"><IconUtensils size={22} /></div>
-          <div>
-            <p className="font-bold text-[#0f2815]">Have surplus food?</p>
-            <p className="text-[13.5px] leading-relaxed text-[#3a4a3a]">List your extra food and help someone in your community.</p>
-          </div>
-        </div>
-        <button onClick={() => navigate("businessListingForm")} className="bg-[#0f7a3b] text-white px-6 py-3 rounded-xl text-[13.5px] font-semibold whitespace-nowrap inline-flex items-center gap-1">List Surplus Food <IconChevronRight size={16} /></button>
       </div>
     </div>
   )
 }
 function FoodCard({ listing }) {
-  const { businesses, toggleFavorite, favorites, navigate, addToCart, cart } = useApp();
+  const { businesses, toggleFavorite, favorites, navigate, addToCart, removeFromCart, cart } = useApp();
   const b = businesses.find(x => x.id === listing.businessId);
   const discount = Math.round((1 - listing.surplusPrice / listing.originalPrice) * 100);
   const fav = favorites.includes(listing.id);
   const inCart = cart.some(c => c.listingId === listing.id);
   const soldOut = listing.status === "sold_out" || listing.quantity <= 0;
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-[0_1px_6px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] transition flex flex-col">
-      <div className="relative aspect-square bg-[#f7f8f6]">
+    <div className="bg-white rounded-[20px] overflow-hidden border border-[#eef3ec] shadow-[0_1px_6px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.1)] transition flex flex-col p-2">
+      <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-[#f7f8f6]">
         <img src={listing.image} alt={listing.name} className="w-full h-full object-cover cursor-pointer" onClick={() => navigate("foodDetail", { id: listing.id })} />
-        {discount >= 10 && <span className="absolute top-2 left-2 bg-[#0f7a3b] text-white text-[10px] font-bold px-2 py-0.5 rounded-md">-{discount}%</span>}
-        <button onClick={() => toggleFavorite(listing.id)} className="absolute top-2 right-2 w-7 h-7 rounded-full grid place-items-center" aria-label="Favourite">
-          <IconHeart filled={fav} size={18} className={fav ? "text-red-500" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"} />
-        </button>
+        {discount >= 10 && <span className="absolute top-2 left-2 bg-[#0f7a3b] text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow">-{discount}%</span>}
         {soldOut && <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px] grid place-items-center"><span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-md">Sold out</span></div>}
       </div>
-      <div className="p-3 flex flex-col flex-1">
-        <p className="font-bold text-[13px] leading-snug text-[#0f2815] line-clamp-2 cursor-pointer" onClick={() => navigate("foodDetail", { id: listing.id })}>{listing.name}</p>
-        <p className="text-[11px] text-[#5a6b5a] mt-1 font-medium truncate">{b?.name}</p>
-        <div className="flex items-center gap-1 mt-1.5">
-          <IconStar size={11} className="text-[#d4a017]" />
-          <span className="text-[11px] font-bold text-[#0f2815]">{b?.rating}</span>
-          <span className="text-[10px] text-[#8aa08a]">({b?.reviews})</span>
+      <div className="px-1.5 pt-1.5 pb-1 flex flex-col flex-1">
+        <p className="text-[10px] font-medium text-[#8aa08a] truncate flex items-center gap-1"><IconMapPin size={12} className="shrink-0" />{listing.location}</p>
+        <div className="mt-1 flex items-baseline gap-1.5">
+          <p className="font-extrabold text-[16px] text-[#0f2815] whitespace-nowrap">{formatNaira(listing.surplusPrice)}</p>
+          <p className="text-[11px] line-through text-[#9ab09a]">{formatNaira(listing.originalPrice)}</p>
         </div>
-        <div className="mt-auto pt-2">
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-extrabold text-[15px] text-[#0f2815]">{formatNaira(listing.surplusPrice)}</span>
-            <span className="text-[11px] line-through text-[#8aa08a]">{formatNaira(listing.originalPrice)}</span>
-          </div>
+        <p className="mt-0.5 font-semibold sm:font-bold text-[12.5px] leading-snug text-[#0f2815] line-clamp-2 cursor-pointer" onClick={() => navigate("foodDetail", { id: listing.id })}>{listing.name}</p>
+        <div className="mt-auto pt-2.5 flex gap-1.5 sm:gap-2">
+          <button onClick={(e) => { e.stopPropagation(); toggleFavorite(listing.id); }} title={fav ? "Remove from favourites" : "Save to favourites"} aria-label={fav ? "Remove from favourites" : "Save to favourites"} className={`w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full grid place-items-center transition active:scale-90 ${fav ? "bg-red-500 text-white" : "bg-[#FFA726] text-[#0f2815]"}`}>
+            <IconHeart filled={fav} size={18} />
+          </button>
           {!soldOut ? (
-            <button onClick={(e) => { e.stopPropagation(); addToCart(listing.id, 1); }} className={`mt-2 w-full py-2 rounded-lg text-[12px] font-bold transition ${inCart ? 'bg-[#eef6ec] text-[#0f7a3b] border border-[#c8e0c8]' : 'bg-[#0f7a3b] hover:bg-[#126a33] text-white'}`}>
-              {inCart ? 'In cart' : 'Add to cart'}
+            <button onClick={(e) => { e.stopPropagation(); inCart ? removeFromCart(listing.id) : addToCart(listing.id, 1); }} title={inCart ? "Remove from cart" : "Add to cart"} className={`flex-1 min-w-0 h-10 sm:h-11 px-2 rounded-full text-[10px] sm:text-[12.5px] font-extrabold tracking-wide truncate transition active:scale-[0.98] ${inCart ? "bg-red-500 hover:bg-red-600 text-white" : "bg-[#0f2815] hover:bg-black text-white"}`}>
+              {inCart ? "REMOVE ✕" : "ADD TO CART"}
             </button>
-          ) : <div className="mt-2 w-full py-2 rounded-lg text-[12px] font-bold bg-[#f7f8f6] text-[#8aa08a] text-center">Unavailable</div>}
-        </div>
+          ) : <div className="flex-1 min-w-0 h-10 sm:h-11 px-2 rounded-full text-[10px] sm:text-[12.5px] font-extrabold bg-[#f7f8f6] text-[#8aa08a] grid place-items-center truncate">UNAVAILABLE</div>}        </div>
       </div>
     </div>
   )
 }
 function Browse() {
-  const { listings, businesses } = useApp();
-  const [q, setQ] = useState("");
+  const { listings, businesses, route } = useApp();
+  const [q, setQ] = useState(route.params?.q || "");
   const [cat, setCat] = useState("All");
   const [maxPrice, setMaxPrice] = useState(3000);
   const [onlyAvailable, setOnlyAvailable] = useState(false);
+  useEffect(() => { if (typeof route.params?.q === "string") setQ(route.params.q); }, [route.params?.q]);
   const filtered = listings.filter(l => {
     if (cat !== "All" && l.category !== cat) return false;
     if (l.surplusPrice > maxPrice) return false;
@@ -745,7 +827,7 @@ function Browse() {
       <div className="bg-white rounded-2xl p-4 shadow-[0_2px_16px_rgba(0,0,0,0.05)] space-y-3">
         <div className="flex flex-col lg:flex-row gap-3">
           <div className="flex-1 relative">
-            <span className="absolute left-3.5 top-3.5 text-[#8aa08a]"><IconSearch size={16} /></span>
+            <span className="absolute left-3.5 top-3.5 text-[#8aa08a]"><IconSearch size={ICON_SIZE} /></span>
             <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search food or restaurant…" className="w-full bg-[#f7f8f6] rounded-xl pl-10 pr-4 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/15" />
           </div>
           <select value={cat} onChange={e => setCat(e.target.value)} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] font-medium focus:outline-none">
@@ -793,9 +875,7 @@ function FoodDetail({ id }) {
     <div className="space-y-8">
       {/* Back navigation */}
       <div>
-        <button onClick={() => navigate(-1)} className="text-sm font-semibold text-[#5a6b5a] hover:text-[#0f7a3b] inline-flex items-center gap-1.5 transition">
-          <IconChevronRight size={14} className="rotate-180" /> Back to listings
-        </button>
+        <BackButton label="Back" fallback="browse" />
       </div>
 
       {/* Clean 2-column Product Card */}
@@ -814,10 +894,11 @@ function FoodDetail({ id }) {
           )}
           <button
             onClick={() => toggleFavorite(id)}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/90 shadow-sm grid place-items-center hover:scale-105 transition"
-            aria-label="Save to favourites"
+            title={fav ? "Remove from favourites" : "Save to favourites"}
+            className={`absolute top-4 right-4 h-11 pl-3 pr-4 rounded-full shadow-md grid place-items-center transition active:scale-95 border ${fav ? "bg-red-500 border-red-500 text-white" : "bg-white border-white text-[#0f2815] hover:text-red-500"}`}
+            aria-label={fav ? "Remove from favourites" : "Save to favourites"}
           >
-            <IconHeart filled={fav} size={18} className={fav ? "text-red-500" : "text-[#5a6b5a]"} />
+            <span className="flex items-center gap-1.5"><IconHeart filled={fav} size={ICON_SIZE} /><span className="text-xs font-extrabold">{fav ? "Saved" : "Save"}</span></span>
           </button>
         </div>
 
@@ -830,7 +911,7 @@ function FoodDetail({ id }) {
             </button>
             <span>•</span>
             <span className="flex items-center gap-1 text-[#0f2815]">
-              <IconStar size={11} className="text-[#d4a017]" /> {b.rating} ({b.reviews})
+              <IconStar size={ICON_SM} className="text-[#d4a017]" /> {b.rating} ({b.reviews})
             </span>
             <span>•</span>
             <span>{b.location}</span>
@@ -885,14 +966,14 @@ function FoodDetail({ id }) {
                   onClick={() => setDeliveryType("pickup")}
                   className={`py-2 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition ${deliveryType === "pickup" ? "border-[#0f7a3b] bg-[#eef6ec] text-[#0f7a3b]" : "border-[#e2ece2] text-[#5a6b5a] hover:bg-[#f7f8f6]"}`}
                 >
-                  <IconStore size={14} /> Self Pickup (Free)
+                  <IconStore size={ICON_SIZE} /> Self Pickup (Free)
                 </button>
                 <button
                   type="button"
                   onClick={() => setDeliveryType("delivery")}
                   className={`py-2 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1.5 transition ${deliveryType === "delivery" ? "border-[#0f7a3b] bg-[#eef6ec] text-[#0f7a3b]" : "border-[#e2ece2] text-[#5a6b5a] hover:bg-[#f7f8f6]"}`}
                 >
-                  <IconBike size={14} /> Delivery (+₦500)
+                  <IconBike size={ICON_SIZE} /> Delivery (+₦500)
                 </button>
               </div>
             </div>
@@ -977,7 +1058,7 @@ function BusinessProfile({ id }) {
   const bizListings = listings.filter(l => l.businessId === id);
   return (
     <div className="space-y-6">
-      <button onClick={() => navigate("home")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back to home</button>
+      <div><BackButton label="Back" fallback="home" /></div>
       {/* Banner + profile card - redesigned to match screenshot exactly */}
       <div className="bg-white rounded-[20px] overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.07)]">
         {/* Green banner with dotted pattern - full width, rounded top */}
@@ -997,12 +1078,12 @@ function BusinessProfile({ id }) {
                   <p className="text-[10px] font-bold tracking-[0.14em] text-[#6b7f6e] uppercase leading-none">Partner</p>
                   <h1 className="text-[19px] md:text-[20px] font-bold tracking-tight text-[#0f1f0f] leading-none mt-[2px]">{b.name}</h1>
                 </div>
-                {b.verified && <span className="inline-flex items-center gap-1 text-[11px] bg-white text-[#157a3b] px-2.5 py-1 rounded-full font-bold shadow-[0_1px_6px_rgba(0,0,0,0.08)] border border-[#e2eee2]"><span className="text-[#157a3b]"><IconCheck size={9} /></span>Verified</span>}
+                {b.verified && <span className="inline-flex items-center gap-1 text-[11px] bg-white text-[#157a3b] px-2.5 py-1 rounded-full font-bold shadow-[0_1px_6px_rgba(0,0,0,0.08)] border border-[#e2eee2]"><span className="text-[#157a3b]"><IconCheck size={ICON_SM} /></span>Verified</span>}
               </div>
               <p className="text-[12.5px] text-[#3d4f3d] mt-2.5 flex flex-wrap items-center gap-1 font-medium">
                 <span>{b.location}</span>
                 <span className="w-1 h-1 bg-[#9ab09a] rounded-full mx-1"></span>
-                <span className="inline-flex items-center gap-1 text-[#0f1f0f] font-bold"><IconStar size={11} className="text-[#0f1f0f]" /> {b.rating}</span>
+                <span className="inline-flex items-center gap-1 text-[#0f1f0f] font-bold"><IconStar size={ICON_SM} className="text-[#0f1f0f]" /> {b.rating}</span>
                 <span className="text-[#6b7f6e]">({b.reviews} reviews)</span>
                 <span className="w-1 h-1 bg-[#9ab09a] rounded-full mx-1"></span>
                 <span>{b.category}</span>
@@ -1059,6 +1140,7 @@ function Cart() {
   if (items.length === 0) return <Empty text="Your cart is empty" actionLabel="Find food" onAction={() => navigate("browse")} />;
   return (
     <div className="max-w-[720px] space-y-5">
+      <div><BackButton label="Back" fallback="browse" /></div>
       <h1 className="text-[24px] font-bold tracking-tight text-[#0f2815]">Your Cart</h1>
       <div className="space-y-3">
         {items.map(i => (
@@ -1094,29 +1176,75 @@ function Checkout() {
   const { cart, listings, addresses, createOrder, navigate } = useApp();
   const [fulfillment, setFulfillment] = useState("delivery");
   const [addressId, setAddressId] = useState(addresses.find(a => a.isDefault)?.id || addresses[0]?.id);
-  const [payment, setPayment] = useState("Card");
+  const [payment, setPayment] = useState("card");
   const [processing, setProcessing] = useState(false);
+  const [procStep, setProcStep] = useState("");
   const [error, setError] = useState("");
+  const [card, setCard] = useState({ holder: "Mercy S.", number: "", expiry: "", cvc: "" });
+  const [cardErr, setCardErr] = useState({});
+  const [saveCard, setSaveCard] = useState(true);
+  const [bank, setBank] = useState("GTBank");
+  const [transferSent, setTransferSent] = useState(false);
+  const [copied, setCopied] = useState("");
+  const [secondsLeft, setSecondsLeft] = useState(15 * 60);
   const items = cart.map(c => ({ ...c, listing: listings.find(l => l.id === c.listingId) })).filter(x => x.listing);
   const subtotal = items.reduce((s, i) => s + i.listing.surplusPrice * i.qty, 0);
   const deliveryFee = fulfillment === "delivery" ? 500 : 0;
   const total = subtotal + deliveryFee + 100;
   const savings = items.reduce((s, i) => s + (i.listing.originalPrice - i.listing.surplusPrice) * i.qty, 0);
+  const vAccount = useMemo(() => "812" + String(total).padStart(7, "0").slice(-7), [total]);
+  useEffect(() => {
+    if (payment !== "transfer") return;
+    setSecondsLeft(15 * 60);
+    const t = setInterval(() => setSecondsLeft(s => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, [payment, total]);
+  const mmss = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
   if (items.length === 0) return <Empty text="No items to checkout" actionLabel="Browse" onAction={() => navigate("browse")} />;
+  const brand = card.number.startsWith("4") ? "VISA" : card.number.startsWith("5") ? "Mastercard" : card.number.startsWith("506") || card.number.startsWith("507") ? "Verve" : "CARD";
+  const fmtNum = (v) => v.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ");
+  const fmtExp = (v) => {
+    const d = v.replace(/\D/g, "").slice(0, 4);
+    if (d.length <= 2) return d;
+    return d.slice(0, 2) + "/" + d.slice(2);
+  };
+  const validateCard = () => {
+    const e = {};
+    if (card.holder.trim().length < 3) e.holder = "Enter name on card";
+    if (card.number.replace(/\s/g, "").length !== 16) e.number = "Card number must be 16 digits (try 4242 4242 4242 4242)";
+    const m = card.expiry.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+    if (!m) e.expiry = "Use MM/YY";
+    else {
+      const yy = 2000 + Number(m[2]); const mm = Number(m[1]);
+      if (yy < 2026 || (yy === 2026 && mm < 9)) e.expiry = "Card expired";
+    }
+    if (!/^\d{3,4}$/.test(card.cvc)) e.cvc = "3–4 digits";
+    setCardErr(e);
+    return Object.keys(e).length === 0;
+  };
+  const copy = (label, text) => { try { navigator.clipboard.writeText(text); } catch {} setCopied(label); setTimeout(() => setCopied(""), 1500); };
   const handlePay = () => {
-    setProcessing(true); setError("");
+    setError("");
+    if (payment === "card" && !validateCard()) return;
+    if (payment === "transfer" && !transferSent) { setError("Tap “I have sent the money” after your transfer so we can verify it."); return; }
+    setProcessing(true);
+    const steps = payment === "card" ? ["Encrypting card…", "Contacting bank…", "Confirming payment…"] : ["Verifying transfer…", "Confirming with bank…"];
+    steps.forEach((s, i) => setTimeout(() => setProcStep(s), i * 700));
     setTimeout(() => {
-      const order = createOrder({ fulfillment, addressId, paymentMethod: payment });
-      setProcessing(false);
+      const method = payment === "card" ? `Card ${brand} •••• ${card.number.replace(/\s/g, "").slice(-4)}` : `Transfer • ${bank} ${vAccount}`;
+      const order = createOrder({ fulfillment, addressId, paymentMethod: method });
+      setProcessing(false); setProcStep("");
       if (!order) { setError("Some items are no longer available. Please update your cart."); return; }
       navigate("orderSuccess", { id: order.id });
-    }, 1200);
+    }, steps.length * 700 + 500);
   };
+  const inputCls = (bad) => `w-full bg-[#f7f8f6] rounded-xl px-3.5 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none focus:ring-2 ${bad ? "ring-2 ring-red-300 border border-red-200" : "focus:ring-[#0f7a3b]/15 border border-transparent"}`;
   return (
     <div className="max-w-5xl grid lg:grid-cols-[1.15fr_0.85fr] gap-6">
       <div className="space-y-4">
+        <div><BackButton label="Back" fallback="cart" /></div>
         <h1 className="text-[24px] font-bold tracking-tight text-[#0f2815]">Checkout</h1>
-        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
+        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec]">
           <p className="font-bold text-sm text-[#0f2815]">Fulfillment</p>
           <div className="mt-3 flex gap-2 p-1 bg-[#f1f6ef] rounded-xl">
             <button onClick={() => setFulfillment("delivery")} className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition ${fulfillment === "delivery" ? "bg-white shadow-sm text-[#0f2815]" : "text-[#5a6b5a]"}`}>Delivery</button>
@@ -1133,27 +1261,76 @@ function Checkout() {
                   </label>
                 ))}
               </div>
-              <button onClick={() => navigate("addresses")} className="text-xs font-bold text-[#0f7a3b] mt-3 inline-flex items-center gap-1">Manage addresses <IconChevronRight size={12} /></button>
+              <button onClick={() => navigate("addresses")} className="text-xs font-bold text-[#0f7a3b] mt-3 inline-flex items-center gap-1">Manage addresses <IconChevronRight /></button>
             </div>
           )}
           {fulfillment === "pickup" && <p className="text-[13.5px] leading-relaxed text-[#3a4a3a] mt-4 bg-[#f7f8f6] rounded-xl p-4 font-medium">Pickup at restaurant during window. You will receive pickup code after payment.</p>}
         </div>
-        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
-          <p className="font-bold text-sm text-[#0f2815]">Payment method <span className="text-[#8aa08a] font-medium">· simulated</span></p>
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            {["Card", "Transfer", "Pay on pickup"].map(m => (
-              <button key={m} onClick={() => setPayment(m)} className={`py-2.5 rounded-xl text-sm font-bold ${payment === m ? "bg-[#0f2815] text-white shadow-sm" : "bg-[#f7f8f6] text-[#3a4a3a]"}`}>{m}</button>
-            ))}
+        {/* Stripe-like payment section */}
+        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec]">
+          <div className="flex items-center justify-between">
+            <p className="font-bold text-sm text-[#0f2815]">Payment</p>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0f7a3b] bg-[#eef6ec] px-2.5 py-1 rounded-full border border-[#c8e0c8]"><IconShield size={ICON_SM} /> Secured · ReFood Pay</span>
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-2.5 text-sm">
-            <input placeholder="Name on card" className="bg-[#f7f8f6] rounded-xl px-3.5 py-3 text-[#0f2815] placeholder:text-[#8aa08a] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/15 font-medium" defaultValue="Mercy S." />
-            <input placeholder="Phone" className="bg-[#f7f8f6] rounded-xl px-3.5 py-3 text-[#0f2815] placeholder:text-[#8aa08a] focus:outline-none font-medium" defaultValue="070 1234 5678" />
-            <input placeholder="Email" className="bg-[#f7f8f6] rounded-xl px-3.5 py-3 text-[#0f2815] placeholder:text-[#8aa08a] focus:outline-none col-span-2 font-medium" defaultValue="mercy@example.com" />
+          <div className="mt-3 grid grid-cols-2 gap-2 p-1 bg-[#f1f6ef] rounded-xl">
+            <button onClick={() => setPayment("card")} className={`py-2.5 rounded-lg text-sm font-bold inline-flex items-center justify-center gap-2 transition ${payment === "card" ? "bg-white shadow-sm text-[#0f2815]" : "text-[#5a6b5a]"}`}><IconCard size={ICON_SIZE} /> Card</button>
+            <button onClick={() => setPayment("transfer")} className={`py-2.5 rounded-lg text-sm font-bold inline-flex items-center justify-center gap-2 transition ${payment === "transfer" ? "bg-white shadow-sm text-[#0f2815]" : "text-[#5a6b5a]"}`}><IconBank size={ICON_SIZE} /> Transfer</button>
           </div>
+          {payment === "card" ? (
+            <div className="mt-4 space-y-3">
+              <div className="rounded-2xl p-4 text-white bg-gradient-to-br from-[#0f2815] via-[#14532d] to-[#0f7a3b] shadow-sm">
+                <div className="flex justify-between items-center"><span className="text-[11px] font-bold tracking-widest text-white/70">REFOOD PAY</span><span className="text-[12px] font-extrabold italic">{brand}</span></div>
+                <p className="mt-3 text-[17px] font-bold tracking-[0.12em]">{card.number || "•••• •••• •••• ••••"}</p>
+                <div className="mt-2 flex justify-between text-[11px] font-semibold text-white/80"><span>{card.holder.toUpperCase() || "YOUR NAME"}</span><span>{card.expiry || "MM/YY"}</span></div>
+              </div>
+              <div>
+                <input placeholder="Name on card" value={card.holder} onChange={e => setCard({ ...card, holder: e.target.value })} className={inputCls(cardErr.holder)} />
+                {cardErr.holder && <p className="text-xs text-red-600 mt-1 font-medium">{cardErr.holder}</p>}
+              </div>
+              <div>
+                <div className="relative">
+                  <input inputMode="numeric" placeholder="4242 4242 4242 4242" value={card.number} onChange={e => setCard({ ...card, number: fmtNum(e.target.value) })} className={`${inputCls(cardErr.number)} pr-20`} />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-extrabold text-[#0f7a3b] bg-white border border-[#eef3ec] px-2 py-1 rounded-md">{brand}</span>
+                </div>
+                {cardErr.number && <p className="text-xs text-red-600 mt-1 font-medium">{cardErr.number}</p>}
+                <p className="text-[11px] text-[#8aa08a] mt-1 font-medium">Demo: use 4242 4242 4242 4242 · any future expiry · any CVC</p>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5">
+                <div>
+                  <input inputMode="numeric" placeholder="MM/YY" value={card.expiry} onChange={e => setCard({ ...card, expiry: fmtExp(e.target.value) })} className={inputCls(cardErr.expiry)} />
+                  {cardErr.expiry && <p className="text-xs text-red-600 mt-1 font-medium">{cardErr.expiry}</p>}
+                </div>
+                <div>
+                  <input inputMode="numeric" placeholder="CVC" value={card.cvc} onChange={e => setCard({ ...card, cvc: e.target.value.replace(/\D/g, "").slice(0, 4) })} className={inputCls(cardErr.cvc)} />
+                  {cardErr.cvc && <p className="text-xs text-red-600 mt-1 font-medium">{cardErr.cvc}</p>}
+                </div>
+              </div>
+              <label className="flex items-center gap-2 text-[13px] font-semibold text-[#3a4a3a]"><input type="checkbox" checked={saveCard} onChange={e => setSaveCard(e.target.checked)} className="accent-[#0f7a3b]" /> Save card for faster checkout</label>
+            </div>
+          ) : (
+            <div className="mt-4 space-y-3">
+              <div className="flex gap-2 flex-wrap">
+                {["GTBank", "Access", "FirstBank", "UBA"].map(b => (
+                  <button key={b} onClick={() => setBank(b)} className={`px-3.5 py-2 rounded-xl text-[13px] font-bold border transition ${bank === b ? "bg-[#0f2815] text-white border-[#0f2815]" : "bg-[#f7f8f6] text-[#3a4a3a] border-transparent"}`}>{b}</button>
+                ))}
+              </div>
+              <div className="bg-[#f7f8f6] rounded-2xl p-4 border border-dashed border-[#c8e0c8]">
+                <p className="text-[11px] font-bold tracking-widest text-[#5a6b5a] uppercase">Transfer {formatNaira(total)} to</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-[22px] font-extrabold tracking-[0.15em] text-[#0f2815]">{vAccount}</span>
+                  <button onClick={() => copy("acct", vAccount)} className="text-[12px] font-bold bg-white border border-[#eef3ec] px-3 py-1.5 rounded-lg shadow-sm">{copied === "acct" ? "Copied!" : "Copy"}</button>
+                </div>
+                <p className="text-[12.5px] text-[#3a4a3a] font-medium mt-1">{bank} · ReFood Pay · Mercy S.</p>
+                <p className="text-[12px] font-bold mt-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">Expires in {mmss} — use this account for this order only</p>
+              </div>
+              <button onClick={() => setTransferSent(!transferSent)} className={`w-full py-3 rounded-xl text-sm font-bold border transition ${transferSent ? "bg-[#eef6ec] text-[#0f7a3b] border-[#0f7a3b]/30" : "bg-white text-[#0f2815] border-[#d4e6d4]"}`}>{transferSent ? "✓ I have sent the money — tap to undo" : "I have sent the money"}</button>
+              <p className="text-[11px] text-[#8aa08a] font-medium text-center">We verify automatically — no receipt upload needed in this demo.</p>
+            </div>
+          )}
         </div>
       </div>
       <div>
-        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] sticky top-20">
+        <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec] sticky top-20">
           <p className="font-bold text-[#0f2815]">Order summary</p>
           <div className="mt-4 space-y-3">
             {items.map(i => (
@@ -1172,11 +1349,10 @@ function Checkout() {
             <div className="flex justify-between font-bold text-base border-t border-[#eef3ec] pt-3 text-[#0f2815]"><span>Total</span><span className="text-[#0f7a3b]">{formatNaira(total)}</span></div>
           </div>
           {error && <p className="text-sm text-red-600 mt-3 bg-red-50 rounded-xl p-3 font-medium">{error}</p>}
-          <button onClick={handlePay} disabled={processing} className="mt-5 w-full bg-[#0f7a3b] text-white py-3.5 rounded-xl font-bold shadow-sm disabled:opacity-60">
-            {processing ? "Processing…" : `Pay ${formatNaira(total)} • Confirm Order`}
+          <button onClick={handlePay} disabled={processing} className="mt-5 w-full bg-[#0f7a3b] hover:bg-[#126a33] text-white py-3.5 rounded-xl font-bold shadow-sm disabled:opacity-60 transition">
+            {processing ? (procStep || "Processing…") : payment === "card" ? `Pay ${formatNaira(total)} with card` : `Verify transfer • ${formatNaira(total)}`}
           </button>
-          <button onClick={() => { setError("Payment could not be completed. Please try again."); }} className="mt-2 w-full text-xs text-[#8aa08a] hover:text-[#3a4a3a] font-medium">Simulate payment failure</button>
-          <p className="text-[11px] text-[#8aa08a] mt-2 text-center font-medium">Demo payment — no real charge.</p>
+          <p className="text-[11px] text-[#8aa08a] mt-2 text-center font-medium inline-flex items-center justify-center gap-1 w-full"><IconShield size={ICON_SM} /> 256-bit encrypted · Demo — no real charge.</p>
         </div>
       </div>
     </div>
@@ -1187,9 +1363,10 @@ function OrderSuccess({ id }) {
   const order = orders.find(o => o.id === id);
   if (!order) return <Empty text="Order not found" />;
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto space-y-4">
+      <div><BackButton label="Back" fallback="orders" /></div>
       <div className="bg-white rounded-[24px] p-7 text-center shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
-        <div className="w-16 h-16 bg-[#eef6ec] rounded-full grid place-items-center mx-auto text-[#0f7a3b]"><IconCheck size={22} /></div>
+        <div className="w-16 h-16 bg-[#eef6ec] rounded-full grid place-items-center mx-auto text-[#0f7a3b]"><IconCheck size={ICON_SIZE} /></div>
         <h1 className="text-[20px] font-bold tracking-tight mt-4 text-[#0f2815]">Payment successful!</h1>
         <p className="text-[13.5px] leading-relaxed text-[#3a4a3a] mt-1 font-medium">Order #{order.id} is confirmed. Estimated window: {order.estimatedWindow}</p>
         <div className="mt-5 bg-[#f7f8f6] rounded-2xl p-4 text-left text-sm">
@@ -1202,7 +1379,7 @@ function OrderSuccess({ id }) {
           <button onClick={() => navigate("trackOrder", { id: order.id })} className="bg-[#0f7a3b] text-white py-3 rounded-xl font-bold">Track order</button>
           <button onClick={() => navigate("orders")} className="bg-[#f1f6ef] py-3 rounded-xl font-bold text-[#0f2815]">View all orders</button>
         </div>
-        <button onClick={() => navigate("home")} className="mt-3 text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1">Continue browsing <IconChevronRight size={14} /></button>
+        <button onClick={() => navigate("home")} className="mt-3 text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1">Continue browsing <IconChevronRight size={ICON_SIZE} /></button>
       </div>
     </div>
   )
@@ -1258,7 +1435,7 @@ function Orders() {
                             <p className="text-[12.5px] text-[#3a4a3a] font-medium mt-0.5 flex flex-wrap items-center gap-1">
                               <span>{b?.name}</span><span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span><span>{o.items[0]?.qty}× {formatNaira(o.items[0]?.price)}</span>
                             </p>
-                            <p className="text-[12px] text-[#5a6b5a] font-medium mt-1 flex items-center gap-1.5"><IconMapPin size={11} />{b?.location} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {isPickup ? "Pickup" : "Delivery"} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {o.estimatedWindow}</p>
+                            <p className="text-[12px] text-[#5a6b5a] font-medium mt-1 flex items-center gap-1.5"><IconMapPin size={ICON_SM} />{b?.location} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {isPickup ? "Pickup" : "Delivery"} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {o.estimatedWindow}</p>
                           </div>
                         </div>
 
@@ -1351,7 +1528,7 @@ function Orders() {
                         <div className="flex items-center gap-2"><span className="font-bold text-sm text-[#0f2815]">{o.items[0]?.name}</span><span className="text-[11px] font-bold px-2 py-1 rounded-full bg-[#eef6ec] text-[#157a3b]">Completed</span></div>
                         <p className="text-[12.5px] text-[#3a4a3a] font-medium">{b?.name} • {new Date(o.createdAt).toLocaleDateString()} • {formatNaira(o.total)} • {o.fulfillment}</p>
                       </div>
-                      <span className="text-[#c5d6c5] self-center"><IconChevronRight size={18} /></span>
+                      <span className="text-[#c5d6c5] self-center"><IconChevronRight size={ICON_SIZE} /></span>
                     </div>
                   )
                 })}
@@ -1415,7 +1592,7 @@ function Orders() {
                 <div><p className="text-xs font-bold text-[#0f2815]">Pick it up</p><p className="text-[11.5px] text-[#5a6b5a] leading-relaxed font-medium">Show your code or track delivery to your door.</p></div>
               </div>
             </div>
-            <button className="mt-4 text-xs font-bold text-[#157a3b] inline-flex items-center gap-1">Learn more about pickups <IconChevronRight size={12} /></button>
+            <button className="mt-4 text-xs font-bold text-[#157a3b] inline-flex items-center gap-1">Learn more about pickups <IconChevronRight size={ICON_SM} /></button>
           </div>
 
           <div className="bg-[#f1f6ef] rounded-2xl p-5 border border-[#d4e6d4]">
@@ -1441,7 +1618,7 @@ function OrderDetail({ id }) {
   const canReview = ["completed", "delivered"].includes(order.status) && !order.reviewed;
   return (
     <div className="max-w-3xl space-y-5">
-      <button onClick={() => navigate("orders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back to My Orders</button>
+      <div><BackButton label="Back" fallback="orders" /></div>
       <div>
         <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">Order #{order.id}</h1>
         <p className="text-[13px] text-[#5a6b5a] mt-1 font-medium">{b?.name} • {new Date(order.createdAt).toLocaleString()}</p>
@@ -1509,7 +1686,7 @@ function TrackOrder({ id }) {
   const code = order.id.replace(/\D/g, '').slice(-7).padStart(7, '7').slice(0, 7);
   return (
     <div className="max-w-5xl space-y-4">
-      <button onClick={() => navigate("orders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back to My Orders</button>
+      <div><BackButton label="Back" fallback="orders" /></div>
       <div>
         <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">Track your order</h1>
         <p className="text-[13.5px] text-[#3a4a3a] mt-1 font-medium">Real-time updates on your {isDelivery ? "delivery" : "pickup"}.</p>
@@ -1526,7 +1703,7 @@ function TrackOrder({ id }) {
             {steps.map((s, i) => (
               <div key={s.key} className="flex-1 flex flex-col items-center text-center relative">
                 <div className={`w-8 h-8 rounded-full grid place-items-center font-bold shadow-sm border-2 ${i < activeIdx ? "bg-[#157a3b] border-[#157a3b] text-white" : i === activeIdx ? "bg-white border-[#157a3b] text-[#157a3b]" : "bg-white border-[#d4e6d4] text-[#8aa08a]"}`}>
-                  {i < activeIdx ? <IconCheck size={12} /> : i === activeIdx ? <span className="w-2 h-2 bg-[#157a3b] rounded-full"></span> : <span className="w-1.5 h-1.5 bg-[#c5d6c5] rounded-full"></span>}
+                  {i < activeIdx ? <IconCheck size={ICON_SM} /> : i === activeIdx ? <span className="w-2 h-2 bg-[#157a3b] rounded-full"></span> : <span className="w-1.5 h-1.5 bg-[#c5d6c5] rounded-full"></span>}
                 </div>
                 <p className={`text-[12px] mt-2 font-bold ${i <= activeIdx ? "text-[#0f2815]" : "text-[#8aa08a]"}`}>{s.label}</p>
                 <p className="text-[11px] text-[#8aa08a] font-medium mt-0.5">{s.time}</p>
@@ -1534,7 +1711,7 @@ function TrackOrder({ id }) {
             ))}
           </div>
           <div className="mt-6 bg-[#f1f6ef] rounded-2xl p-4 flex gap-3 items-center border border-[#e2ece2]">
-            <span className="w-9 h-9 bg-white rounded-xl grid place-items-center shadow-sm text-[#157a3b]"><IconBike size={18} /></span>
+            <span className="w-9 h-9 bg-white rounded-xl grid place-items-center shadow-sm text-[#157a3b]"><IconBike size={ICON_SIZE} /></span>
             <div className="flex-1"><p className="text-sm font-bold text-[#0f2815]">Your order is on the way!</p><p className="text-xs text-[#3a4a3a] font-medium">Our rider is heading to your location.</p></div>
             <div className="text-right hidden sm:block"><p className="text-xs text-[#5a6b5a] font-medium">Estimated arrival</p><p className="text-sm font-bold text-[#157a3b]">{order.estimatedWindow}</p></div>
           </div>
@@ -1554,15 +1731,15 @@ function TrackOrder({ id }) {
           </div>
 
           <div className="mt-4 h-52 bg-[#f1f6ef] rounded-2xl relative overflow-hidden border border-[#e2ece2]">
-            <div className="absolute left-4 top-4 bg-white rounded-full px-3 py-1.5 text-xs font-bold shadow-sm text-[#0f2815] flex items-center gap-1.5 border border-[#eef3ec]"><IconMapPin size={12} />{b?.name} • {b?.location}</div>
+            <div className="absolute left-4 top-4 bg-white rounded-full px-3 py-1.5 text-xs font-bold shadow-sm text-[#0f2815] flex items-center gap-1.5 border border-[#eef3ec]"><IconMapPin size={ICON_SM} />{b?.name} • {b?.location}</div>
             <div className="absolute right-4 bottom-4 bg-white rounded-2xl px-3.5 py-2.5 text-xs shadow-md leading-relaxed font-medium text-[#0f2815] border border-[#eef3ec]">Your location<br /><span className="text-[#5a6b5a]">12 Example St, Wuse 2, Abuja</span></div>
-            <div className="absolute left-1/2 top-1/2 w-9 h-9 bg-white rounded-full grid place-items-center shadow-md -translate-x-1/2 -translate-y-1/2 text-[#157a3b] border border-[#eef3ec]"><IconBike size={16} /></div>
+            <div className="absolute left-1/2 top-1/2 w-9 h-9 bg-white rounded-full grid place-items-center shadow-md -translate-x-1/2 -translate-y-1/2 text-[#157a3b] border border-[#eef3ec]"><IconBike size={ICON_SIZE} /></div>
             <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 208"><path d="M 38 92 Q 118 152 198 92 T 362 130" fill="none" stroke="#157a3b" strokeWidth="2" strokeDasharray="7 7" opacity="0.7" /></svg>
           </div>
           <div className="mt-5 flex items-center gap-3">
             <img src="https://i.pravatar.cc/150?img=12" alt="rider" className="w-11 h-11 rounded-full object-cover" />
             <div className="text-sm">
-              <p className="font-bold text-[#0f2815] flex items-center gap-2">Ahmed Ibrahim <span className="inline-flex items-center gap-1 text-amber-600 font-bold"><IconStar size={12} /> 4.8</span></p>
+              <p className="font-bold text-[#0f2815] flex items-center gap-2">Ahmed Ibrahim <span className="inline-flex items-center gap-1 text-amber-600 font-bold"><IconStar size={ICON_SM} /> 4.8</span></p>
               <p className="text-xs text-[#5a6b5a] font-medium">Your rider • 070 1234 5678</p>
             </div>
             <button className="ml-auto bg-[#f1f6ef] text-[#0f2815] px-4 py-2 rounded-xl text-sm font-bold">Message</button>
@@ -1576,7 +1753,7 @@ function TrackOrder({ id }) {
               <img src={order.items[0]?.image} alt={order.items[0]?.name} className="w-14 h-14 rounded-xl object-cover" />
               <div className="text-sm flex-1">
                 <p className="font-bold text-[#0f2815]">{order.items[0]?.name}</p>
-                <p className="text-xs text-[#5a6b5a] font-medium flex items-center gap-1">{b?.name} <span className="w-3 h-3 bg-[#0f7a3b] text-white rounded-full grid place-items-center"><IconCheck size={7} /></span></p>
+                <p className="text-xs text-[#5a6b5a] font-medium flex items-center gap-1">{b?.name} <span className="w-3 h-3 bg-[#0f7a3b] text-white rounded-full grid place-items-center"><IconCheck size={ICON_SM} /></span></p>
                 <p className="text-xs text-[#5a6b5a] font-medium">Qty: {order.items[0]?.qty}</p>
               </div>
               <span className="text-sm font-bold text-[#0f2815]">{formatNaira(order.items[0]?.price || 0)}</span>
@@ -1594,9 +1771,9 @@ function TrackOrder({ id }) {
           <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
             <p className="font-bold text-sm text-[#0f2815]">Need help?</p>
             <div className="mt-3 space-y-1 text-sm font-medium">
-              <button className="w-full flex justify-between items-center py-3 border-b border-[#eef3ec] text-[#0f2815]">Contact support <IconChevronRight size={14} /></button>
-              <button className="w-full flex justify-between items-center py-3 border-b border-[#eef3ec] text-[#0f2815]">View help center <IconChevronRight size={14} /></button>
-              <button className="w-full flex justify-between items-center py-3 text-[#0f2815]">Report an issue <IconChevronRight size={14} /></button>
+              <button className="w-full flex justify-between items-center py-3 border-b border-[#eef3ec] text-[#0f2815]">Contact support <IconChevronRight size={ICON_SIZE} /></button>
+              <button className="w-full flex justify-between items-center py-3 border-b border-[#eef3ec] text-[#0f2815]">View help center <IconChevronRight size={ICON_SIZE} /></button>
+              <button className="w-full flex justify-between items-center py-3 text-[#0f2815]">Report an issue <IconChevronRight size={ICON_SIZE} /></button>
             </div>
           </div>
         </div>
@@ -1608,6 +1785,7 @@ function Notifications() {
   const { notifications, setNotifications } = useApp();
   return (
     <div className="max-w-xl space-y-4">
+      <div><BackButton label="Back" fallback="home" /></div>
       <div className="flex items-center justify-between">
         <h1 className="text-[24px] font-bold tracking-tight text-[#0f2815]">Notifications</h1>
         <button onClick={() => setNotifications(prev => prev.map(n => ({ ...n, read: true })))} className="text-xs font-bold text-[#0f7a3b] bg-white px-3 py-1.5 rounded-full shadow-sm border border-[#eef3ec]">Mark all read</button>
@@ -1625,43 +1803,92 @@ function Notifications() {
   )
 }
 function Profile() {
-  const { currentUser, navigate, orders, favorites } = useApp();
-  const dicebear = (seed) => `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc`;
+  const { currentUser, navigate } = useApp();
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState("Mercy Sylvester");
+  const [email, setEmail] = useState("mercy.sylvester@gmail.com");
+  const [phone, setPhone] = useState("070 1234 5678");
+  const [avatar, setAvatar] = useState(null);
+  const avatarRef = useRef(null);
+  const pickAvatar = (file) => {
+    if (!file || !file.type.startsWith("image/")) return;
+    const r = new FileReader();
+    r.onload = () => setAvatar(r.result);
+    r.readAsDataURL(file);
+  };
+  const rowIcon = "text-[#0f2815] shrink-0";
+  const Row = ({ icon, title, sub, right, onClick }) => (
+    <button onClick={onClick} className="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-[#f7f8f6] transition">
+      <span className={rowIcon}>{icon}</span>
+      <span className="flex-1 min-w-0">
+        <span className="font-bold text-[14px] text-[#0f2815] block leading-tight">{title}</span>
+        {sub && <span className="text-[12.5px] text-[#5a6b5a] font-medium block mt-0.5">{sub}</span>}
+      </span>
+      {right && <span className="text-[13px] font-semibold text-[#0f2815] shrink-0">{right}</span>}
+      <span className="text-[#0f2815] shrink-0"><IconChevronRight size={ICON_SIZE} /></span>
+    </button>
+  );
+  const Section = ({ title, children }) => (
+    <div className="bg-white rounded-2xl shadow-[0_2px_16px_rgba(0,0,0,0.05)] border border-[#eef3ec] overflow-hidden">
+      <p className="px-5 pt-4 pb-1 font-extrabold text-[16px] text-[#0f2815]">{title}</p>
+      <div className="divide-y divide-[#eef3ec]">{children}</div>
+    </div>
+  );
   return (
-    <div className="max-w-[560px] space-y-4">
-      <h1 className="text-[26px] font-bold tracking-tight text-[#0f2815]">Profile</h1>
-      <div className="bg-white rounded-2xl p-4 flex gap-3 items-center shadow-[0_2px_16px_rgba(0,0,0,0.06)] border border-[#eef3ec]">
-        <img src={dicebear(currentUser.avatar)} alt="avatar" className="w-12 h-12 rounded-xl bg-[#eef3ec] shrink-0" />
-        <div className="min-w-0">
-          <p className="font-bold text-[14px] text-[#0f2815] leading-tight">{currentUser.name}</p>
-          <p className="text-[12.5px] text-[#5a6b5a] font-medium leading-tight">{currentUser.email}</p>
-          <p className="text-[12.5px] text-[#5a6b5a] font-medium leading-tight">{currentUser.phone}</p>
+    <div className="max-w-[720px] mx-auto space-y-4 pb-4">
+      <div>
+        <h1 className="text-[26px] font-extrabold tracking-tight text-[#0f2815]">Profile</h1>
+        <p className="text-[13.5px] text-[#5a6b5a] font-medium mt-0.5">Manage your account and preferences.</p>
+      </div>
+      {/* Identity card */}
+      <div className="bg-[#f4f6f0] rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 border border-[#eef3ec]">
+        <div className="relative shrink-0 w-fit">
+          <img src={avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.avatar}&backgroundColor=ffd5dc`} alt="avatar" className="w-24 h-24 rounded-full object-cover bg-white ring-4 ring-white shadow-sm" />
+          <button onClick={() => avatarRef.current?.click()} aria-label="Change photo" className="absolute bottom-1 right-1 w-8 h-8 rounded-full bg-[#eef6ec] border border-[#c8e0c8] grid place-items-center text-[#0f2815] shadow-sm hover:bg-white transition"><IconCamera /></button>
+          <input ref={avatarRef} type="file" accept="image/*" className="hidden" onChange={(e) => pickAvatar(e.target.files?.[0])} />
         </div>
-        <button className="ml-auto bg-[#eef5ee] hover:bg-[#e2eee2] text-[#0f2815] px-5 py-2 rounded-full text-[12.5px] font-bold transition shrink-0">Edit</button>
+        <div className="flex-1 min-w-0">
+          {editing ? (
+            <div className="space-y-2">
+              <input value={name} onChange={e => setName(e.target.value)} className="w-full bg-white rounded-xl px-3 py-2 text-sm font-bold text-[#0f2815] border border-[#eef3ec] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/20" />
+              <input value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-white rounded-xl px-3 py-2 text-sm font-medium text-[#0f2815] border border-[#eef3ec] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/20" />
+              <input value={phone} onChange={e => setPhone(e.target.value)} className="w-full bg-white rounded-xl px-3 py-2 text-sm font-medium text-[#0f2815] border border-[#eef3ec] focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/20" />
+            </div>
+          ) : (
+            <>
+              <p className="font-extrabold text-[20px] text-[#0f2815] leading-tight flex items-center gap-2 flex-wrap">{name}
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0f7a3b]">Verified <IconBadgeCheck /></span>
+              </p>
+              <p className="text-[13.5px] text-[#3a4a3a] font-medium mt-2 flex items-center gap-2"><IconMail size={ICON_SIZE} />{email}</p>
+              <p className="text-[13.5px] text-[#3a4a3a] font-medium mt-1.5 flex items-center gap-2"><IconPhone size={ICON_SIZE} />{phone}</p>
+            </>
+          )}
+        </div>
+        <button onClick={() => setEditing(!editing)} className="shrink-0 inline-flex items-center gap-2 border border-[#0f7a3b]/40 text-[#0f7a3b] px-4 py-2.5 rounded-xl text-[13px] font-bold hover:bg-white transition self-start sm:self-center"><IconEdit size={ICON_SM} />{editing ? "Done" : "Edit profile"}</button>
       </div>
-      <div className="bg-white rounded-2xl overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.06)] border border-[#eef3ec] divide-y divide-[#eef3ec]">
-        <button onClick={() => navigate("orders")} className="w-full text-left px-4 py-3.5 flex justify-between items-center text-[13.5px] hover:bg-[#f7f8f6] transition">
-          <span className="font-semibold text-[#0f2815]">Order history</span>
-          <span className="text-[#6b7f6b] font-semibold flex items-center gap-1 text-[13px]">{orders.length} <span className="text-[#8aa08a]"><IconChevronRight size={14} /></span></span>
-        </button>
-        <button onClick={() => navigate("favorites")} className="w-full text-left px-4 py-3.5 flex justify-between items-center text-[13.5px] hover:bg-[#f7f8f6] transition">
-          <span className="font-semibold text-[#0f2815]">Favorites</span>
-          <span className="text-[#6b7f6b] font-semibold flex items-center gap-1 text-[13px]">{favorites.length} <span className="text-[#8aa08a]"><IconChevronRight size={14} /></span></span>
-        </button>
-        <button onClick={() => navigate("addresses")} className="w-full text-left px-4 py-3.5 flex justify-between items-center text-[13.5px] hover:bg-[#f7f8f6] transition">
-          <span className="font-semibold text-[#0f2815]">Saved addresses</span>
-          <span className="text-[#8aa08a]"><IconChevronRight size={14} /></span>
-        </button>
-        <button onClick={() => navigate("notifications")} className="w-full text-left px-4 py-3.5 flex justify-between items-center text-[13.5px] hover:bg-[#f7f8f6] transition">
-          <span className="font-semibold text-[#0f2815]">Notifications</span>
-          <span className="text-[#8aa08a]"><IconChevronRight size={14} /></span>
-        </button>
-        <button className="w-full text-left px-4 py-3.5 flex justify-between items-center text-[13.5px] hover:bg-[#f7f8f6] transition">
-          <span className="font-semibold text-[#0f2815]">Help & Support</span>
-          <span className="text-[#8aa08a]"><IconChevronRight size={14} /></span>
-        </button>
-        <button onClick={() => { localStorage.clear(); location.reload(); }} className="w-full text-left px-4 py-3.5 text-[13.5px] font-bold text-[#d12e2e] hover:bg-red-50 transition">Logout — clear demo data</button>
-      </div>
+      <Section title="Account">
+        <Row icon={<IconUser size={ICON_SIZE} />} title="Personal information" sub="Manage your personal details" onClick={() => setEditing(true)} />
+        <Row icon={<IconMapPin size={ICON_SIZE} />} title="Saved addresses" sub="Manage your delivery addresses" onClick={() => navigate("addresses")} />
+        <Row icon={<IconCard size={ICON_SIZE} />} title="Payment methods" sub="Add or manage your payment methods" onClick={() => navigate("checkout")} />
+        <Row icon={<IconBell size={ICON_SIZE} />} title="Notifications" sub="Manage how you receive updates" onClick={() => navigate("notifications")} />
+        <Row icon={<IconShield size={ICON_SIZE} />} title="Privacy & security" sub="Manage your privacy and security" />
+      </Section>
+      <Section title="Preferences">
+        <Row icon={<IconSprout size={ICON_SIZE} />} title="Dietary preferences" sub="Tell us your food preferences" />
+        <Row icon={<IconGlobe size={ICON_SIZE} />} title="Language" sub="Choose your preferred language" right="English" />
+      </Section>
+      <Section title="Support">
+        <Row icon={<IconHelp size={ICON_SIZE} />} title="Help Center" sub="FAQs and helpful articles" />
+        <Row icon={<IconHeadset size={ICON_SIZE} />} title="Contact support" sub="Chat or email our support team" />
+      </Section>
+      <Section title="Business">
+        <Row icon={<IconStore size={ICON_SIZE} />} title="Switch to business account" sub="List surplus food and reach more people" onClick={() => navigateTo("/business/login")} />
+      </Section>
+      <button onClick={() => { localStorage.clear(); location.reload(); }} className="w-full bg-[#fdf3f2] border border-[#f3dede] rounded-2xl px-5 py-4 flex items-center gap-4 hover:bg-[#fbe9e8] transition text-left">
+        <span className="text-[#b3261e]"><IconLogout size={ICON_SIZE} /></span>
+        <span className="flex-1 font-bold text-[14px] text-[#b3261e]">Log out</span>
+        <span className="text-[#0f2815]"><IconChevronRight size={ICON_SIZE} /></span>
+      </button>
     </div>
   )
 }
@@ -1675,7 +1902,7 @@ function Addresses() {
   };
   return (
     <div className="max-w-xl space-y-4">
-      <button onClick={() => navigate("profile")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back</button>
+      <div><BackButton label="Back" fallback="profile" /></div>
       <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">Saved addresses</h1>
       <div className="space-y-3">
         {addresses.map(a => (
@@ -1773,15 +2000,16 @@ function BusinessListingForm({ editId }) {
   };
   return (
     <div className="max-w-xl space-y-4">
-      <button onClick={() => navigate("businessListings")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back</button>
+      <button onClick={() => navigate("businessListings")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={ICON_SIZE} className="rotate-180" /> Back</button>
       <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">{edit ? "Edit listing" : "Add surplus food"}</h1>
       <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] space-y-3">
         <input placeholder="Food name *" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none focus:ring-2 focus:ring-[#0f7a3b]/15" />
         <textarea placeholder="Description" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none" rows={3} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] font-medium focus:outline-none">{categories.filter(c => c !== "All").map(c => <option key={c} value={c}>{c}</option>)}</select>
-          <input placeholder="Image URL" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none" />
+          <input placeholder="Location e.g. Wuse 2, Abuja" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] placeholder:text-[#8aa08a] font-medium focus:outline-none" />
         </div>
+        <ListingImageField value={form.image} onChange={(v) => setForm({ ...form, image: v })} />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <input type="number" placeholder="Original" value={form.originalPrice} onChange={e => setForm({ ...form, originalPrice: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] focus:outline-none font-medium" />
           <input type="number" placeholder="Surplus" value={form.surplusPrice} onChange={e => setForm({ ...form, surplusPrice: e.target.value })} className="bg-[#f7f8f6] rounded-xl px-4 py-3 text-sm text-[#0f2815] focus:outline-none font-medium" />
@@ -1805,9 +2033,9 @@ function BusinessOrders() {
       <div className="space-y-3">
         {my.map(o => (
           <div key={o.id} onClick={() => navigate("businessOrderDetail", { id: o.id })} className="bg-white rounded-2xl p-4 flex gap-3 cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition">
-            <div className="w-10 h-10 rounded-xl bg-[#f1f6ef] grid place-items-center text-[#0f7a3b]"><IconClipboard size={16} /></div>
+            <div className="w-10 h-10 rounded-xl bg-[#f1f6ef] grid place-items-center text-[#0f7a3b]"><IconClipboard size={ICON_SIZE} /></div>
             <div className="flex-1"><div className="flex items-center gap-2"><span className="font-bold text-sm text-[#0f2815]">#{o.id}</span><span className="text-xs bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full font-bold">{o.status.replaceAll("_", " ")}</span></div><p className="text-[13px] text-[#3a4a3a] mt-1 font-medium">{o.items.map(i => `${i.name} ×${i.qty}`).join(", ")} • {formatNaira(o.total)} • {o.fulfillment}</p><p className="text-xs text-[#8aa08a] font-medium">{new Date(o.createdAt).toLocaleString()}</p></div>
-            <span className="text-[#c5d6c5] self-center"><IconChevronRight size={18} /></span>
+            <span className="text-[#c5d6c5] self-center"><IconChevronRight size={ICON_SIZE} /></span>
           </div>
         ))}
         {my.length === 0 && <Empty text="No orders yet. New customer orders will appear here." />}
@@ -1826,7 +2054,7 @@ function BusinessOrderDetail({ id }) {
   const next = flow[idx + 1];
   return (
     <div className="max-w-xl space-y-4">
-      <button onClick={() => navigate("businessOrders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={14} className="rotate-180" /> Back</button>
+      <button onClick={() => navigate("businessOrders")} className="text-sm font-bold text-[#0f7a3b] inline-flex items-center gap-1"><IconChevronRight size={ICON_SIZE} className="rotate-180" /> Back</button>
       <h1 className="text-[22px] font-bold tracking-tight text-[#0f2815]">Order #{order.id}</h1>
       <div className="bg-white rounded-2xl p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)]">
         <p className="text-sm text-[#0f2815] font-bold">Customer: Mercy S. • 070 1234 5678</p>
@@ -1854,6 +2082,24 @@ function Empty({ text, actionLabel, onAction }) {
       <p className="text-[#3a4a3a] leading-relaxed font-medium">{text}</p>
       {actionLabel && <button onClick={onAction} className="mt-4 bg-[#0f7a3b] text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-sm">{actionLabel}</button>}
     </div>
+  )
+}
+
+// Reusable back button: goes to previous page in app history, falls back if none.
+// hideIfNoHistory=true renders nothing when there's nowhere to go (for tab roots).
+function BackButton({ label = "Back", fallback = "home", hideIfNoHistory = false, className = "" }) {
+  const { goBack, canGoBack } = useApp();
+  if (hideIfNoHistory && !canGoBack) return null;
+  return (
+    <button
+      onClick={() => goBack(fallback)}
+      aria-label={label}
+      title={label}
+      className={`inline-flex items-center gap-1.5 rounded-full bg-white border border-[#eef3ec] shadow-sm pl-2 pr-3.5 py-1.5 text-sm font-bold text-[#0f2815] hover:bg-[#f1f6ef] transition ${className}`}
+    >
+      <span className="w-7 h-7 rounded-full bg-[#f1f6ef] grid place-items-center"><IconChevronRight size={ICON_SIZE} className="rotate-180" /></span>
+      {label}
+    </button>
   )
 }
 

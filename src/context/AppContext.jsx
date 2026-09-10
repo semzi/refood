@@ -56,10 +56,31 @@ export function AppProvider({ children }) {
     return [];
   });
 
-  // navigation
+  // navigation with history so every page can go back
   const [route, setRoute] = useState({ name: "welcome", params: {} });
+  const [history, setHistory] = useState([]);
 
-  const navigate = (name, params = {}) => setRoute({ name, params });
+  const goBack = (fallback = "home") => {
+    if (history.length === 0) {
+      setRoute({ name: fallback, params: {} });
+      return;
+    }
+    const last = history[history.length - 1];
+    setHistory(history.slice(0, -1));
+    setRoute(last);
+  };
+  const navigate = (name, params = {}) => {
+    // legacy / defensive: navigate(-1) or navigate("back") means go back
+    if (name === -1 || name === "back") {
+      goBack();
+      return;
+    }
+    // don't push duplicates of the exact same route
+    if (route.name === name && JSON.stringify(route.params || {}) === JSON.stringify(params || {})) return;
+    setHistory(prev => [...prev.slice(-30), route]);
+    setRoute({ name, params });
+  };
+  const canGoBack = history.length > 0;
 
   useEffect(() => {
     const data = { role, listings, businesses, cart, favorites, orders, addresses, notifications, reviews };
@@ -191,7 +212,7 @@ export function AppProvider({ children }) {
     role, setRole, currentUser, businessUser,
     listings, businesses, setListings, setBusinesses,
     cart, favorites, orders, addresses, notifications, reviews,
-    route, navigate,
+    route, navigate, goBack, canGoBack,
     toggleFavorite, addToCart, updateCartQty, removeFromCart, clearCart,
     createOrder, advanceOrderStatus, updateOrderStatus,
     addListing, updateListing, deleteListing,
