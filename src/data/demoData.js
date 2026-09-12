@@ -195,5 +195,76 @@ export const initialAddresses = [
 
 export const initialNotifications = [
   { id: "n1", title: "Welcome to ReFood!", body: "Discover surplus food near you at 50% off.", time: "2h ago", read: false },
-  { id: "n2", title: "Mama B Kitchen has new surplus!", body: "Party Jollof Rice & Chicken now available.", time: "5h ago", read: false },
+  { id: "n2", title: "Order on the way! 🛵", body: "Ahmed Ibrahim is on the way with your order #RF842915 from Mama B Kitchen.", time: "10m ago", read: false },
+  { id: "n3", title: "Mama B Kitchen has new surplus!", body: "Party Jollof Rice & Chicken now available.", time: "5h ago", read: false },
 ];
+
+export const initialOrders = [
+  {
+    id: "RF842915",
+    businessId: "business_001",
+    fulfillment: "delivery",
+    addressId: "addr_1",
+    paymentMethod: "Card VISA •••• 4242",
+    status: "on_the_way",
+    createdAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+    estimatedWindow: "12:30 PM - 1:00 PM",
+    deliveryFee: 500,
+    serviceFee: 100,
+    subtotal: 1800,
+    total: 2400,
+    items: [
+      {
+        listingId: "listing_001",
+        name: "Party Jollof Rice & Chicken",
+        qty: 1,
+        price: 1800,
+        businessId: "business_001",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPPjMfCnUfnXR9G6MKpcXT_LBV2zK5iMO-mYdSNJNpAw&s=10",
+      },
+    ],
+  },
+  {
+    id: "RF719234",
+    businessId: "business_001",
+    fulfillment: "pickup",
+    addressId: "addr_1",
+    paymentMethod: "Card Mastercard •••• 5512",
+    status: "completed",
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+    estimatedWindow: "6:00 PM - 8:00 PM",
+    deliveryFee: 0,
+    serviceFee: 100,
+    subtotal: 1500,
+    total: 1600,
+    items: [
+      {
+        listingId: "listing_003",
+        name: "Pounded Yam & Egusi Soup",
+        qty: 1,
+        price: 1500,
+        businessId: "business_001",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIcLqrbi85Evemm_xAbbGeB1e5jh2Gxn4aAadiht5msA&s=10",
+      },
+    ],
+  },
+];
+
+export const initialDriverMessages = {
+  RF842915: [
+    {
+      id: "m1",
+      sender: "driver",
+      text: "Hello Mercy! 👋 I have picked up your order from Mama B Kitchen and I am on my way to 12 Example Street, Wuse 2.",
+      time: "10 mins ago",
+      timestamp: Date.now() - 10 * 60 * 1000,
+    },
+    {
+      id: "m2",
+      sender: "driver",
+      text: "Estimated arrival is in about 5–10 minutes. Please have your 7-digit code ready!",
+      time: "5 mins ago",
+      timestamp: Date.now() - 5 * 60 * 1000,
+    },
+  ],
+};
