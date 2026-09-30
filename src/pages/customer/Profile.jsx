@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import {
   IconUser,
@@ -56,19 +56,51 @@ function ProfileSection({ title, children }) {
 }
 
 export function Profile() {
-  const { user, currentUser, favorites, orders, navigate, switchRole } = useApp();
+  const { user, currentUser, updateCurrentUser, favorites, orders, navigate, switchRole } = useApp();
+  const profileUser = currentUser || user;
+  const dicebear = (seed) => `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed || 'Mercy S.')}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc`;
+  const defaultNavbarAvatar = profileUser?.avatar && !profileUser.avatar.includes('unsplash.com') 
+    ? profileUser.avatar 
+    : dicebear(profileUser?.name);
+
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState(user?.name || currentUser?.name || 'Mercy Sylvester');
-  const [email, setEmail] = useState(user?.email || currentUser?.email || 'mercy.sylvester@gmail.com');
-  const [phone, setPhone] = useState(user?.phone || currentUser?.phone || '070 1234 5678');
-  const [avatar, setAvatar] = useState(user?.avatar || null);
+  const [name, setName] = useState(profileUser?.name || 'Mercy S.');
+  const [email, setEmail] = useState(profileUser?.email || 'mercy@example.com');
+  const [phone, setPhone] = useState(profileUser?.phone || '070 1234 5678');
+  const [avatar, setAvatar] = useState(defaultNavbarAvatar);
   const avatarRef = useRef(null);
+
+  useEffect(() => {
+    if (profileUser) {
+      if (profileUser.name) setName(profileUser.name);
+      if (profileUser.email) setEmail(profileUser.email);
+      if (profileUser.phone) setPhone(profileUser.phone);
+      if (profileUser.avatar) {
+        setAvatar(profileUser.avatar.includes('unsplash.com') ? dicebear(profileUser.name) : profileUser.avatar);
+      }
+    }
+  }, [profileUser]);
 
   const pickAvatar = (file) => {
     if (!file || !file.type.startsWith('image/')) return;
     const r = new FileReader();
-    r.onload = () => setAvatar(r.result);
+    r.onload = () => {
+      const newAvatar = r.result;
+      setAvatar(newAvatar);
+      if (updateCurrentUser) {
+        updateCurrentUser({ avatar: newAvatar });
+      }
+    };
     r.readAsDataURL(file);
+  };
+
+  const handleToggleEdit = () => {
+    if (editing) {
+      if (updateCurrentUser) {
+        updateCurrentUser({ name, email, phone, avatar });
+      }
+    }
+    setEditing(!editing);
   };
 
   const deliveredCount = orders.filter((o) => o.status === 'delivered' || o.status === 'completed').length;
@@ -87,7 +119,7 @@ export function Profile() {
       <div className="bg-[#f4f6f0] rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 border border-[#eef3ec]">
         <div className="relative shrink-0 w-fit">
           <img
-            src={avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}
+            src={avatar || defaultNavbarAvatar}
             alt="avatar"
             className="w-24 h-24 rounded-full object-cover bg-white ring-4 ring-white shadow-sm"
           />
@@ -150,7 +182,7 @@ export function Profile() {
         </div>
 
         <button
-          onClick={() => setEditing(!editing)}
+          onClick={handleToggleEdit}
           className="shrink-0 inline-flex items-center gap-2 border border-[#0f7a3b]/40 text-[#0f7a3b] px-4 py-2.5 rounded-xl text-[13px] font-bold hover:bg-white transition self-start sm:self-center cursor-pointer"
         >
           <IconEdit size={ICON_SM} />

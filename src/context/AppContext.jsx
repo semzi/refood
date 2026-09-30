@@ -6,6 +6,8 @@ export const useApp = () => useContext(AppContext);
 
 const STORAGE_KEY = "refood_state_v2";
 
+export const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/avataaars/svg?seed=Mercy%20S.&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc";
+
 export function AppProvider({ children }) {
   const [role, setRole] = useState(() => {
     if (typeof window !== 'undefined' && window.location.pathname.startsWith('/business')) {
@@ -13,7 +15,27 @@ export function AppProvider({ children }) {
     }
     return "customer";
   });
-  const [currentUser] = useState({ name: "Mercy S.", email: "mercy@example.com", phone: "070 1234 5678", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80", location: "Abuja, Nigeria" });
+  const [currentUser, setCurrentUser] = useState(() => {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) {
+      try {
+        const p = JSON.parse(s);
+        if (p.currentUser) {
+          if (!p.currentUser.avatar || p.currentUser.avatar.includes("unsplash.com")) {
+            return { ...p.currentUser, avatar: DEFAULT_AVATAR };
+          }
+          return p.currentUser;
+        }
+      } catch {}
+    }
+    return {
+      name: "Mercy S.",
+      email: "mercy@example.com",
+      phone: "070 1234 5678",
+      avatar: DEFAULT_AVATAR,
+      location: "Abuja, Nigeria"
+    };
+  });
   const [businessUser] = useState({ id: "business_001", name: "Mega Kitchen Lekki", owner: "Mama B", email: "mama@kitchen.ng" });
 
   const [listings, setListings] = useState(() => {
@@ -103,10 +125,14 @@ export function AppProvider({ children }) {
     }
   };
 
+  const updateCurrentUser = (data) => {
+    setCurrentUser(prev => ({ ...prev, ...data }));
+  };
+
   useEffect(() => {
-    const data = { role, listings, businesses, cart, favorites, orders, addresses, notifications, reviews, driverMessages };
+    const data = { role, currentUser, listings, businesses, cart, favorites, orders, addresses, notifications, reviews, driverMessages };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [role, listings, businesses, cart, favorites, orders, addresses, notifications, reviews, driverMessages]);
+  }, [role, currentUser, listings, businesses, cart, favorites, orders, addresses, notifications, reviews, driverMessages]);
 
   const toggleFavorite = (listingId) => {
     setFavorites(prev => prev.includes(listingId) ? prev.filter(id => id !== listingId) : [...prev, listingId]);
@@ -337,6 +363,7 @@ export function AppProvider({ children }) {
   const value = {
     role, setRole, switchRole,
     currentUser, user: currentUser,
+    setCurrentUser, updateCurrentUser,
     businessUser,
     listings, foods: listings,
     businesses, setListings, setBusinesses,
