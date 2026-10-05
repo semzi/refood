@@ -6,10 +6,10 @@ import {
   IconChefHat,
   IconPlus,
   IconArrowRight,
-  IconTrendingUp,
   IconClock,
+  IconBadgeCheck,
 } from '../../components/common/Icons';
-import { formatNaira } from '../../utils/formatters';
+import { formatNaira, getListingPrice } from '../../utils/formatters';
 
 export function BusinessDashboard({ navigateBusiness }) {
   const { orders, foods, advanceOrderStatus } = useApp();
@@ -35,8 +35,11 @@ export function BusinessDashboard({ navigateBusiness }) {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             Kitchen Live Operations
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2.5 flex-wrap">
             Welcome back, Mega Kitchen Lekki
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0f7a3b] bg-white px-2 py-0.5 rounded-md border border-[#c8e0c8]">
+              Verified <IconBadgeCheck size={14} />
+            </span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
             You have <strong className="text-emerald-400">{activeOrders.length} active orders</strong> currently in fulfillment. Control order preparation stages below.
@@ -63,9 +66,6 @@ export function BusinessDashboard({ navigateBusiness }) {
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-black text-gray-900 mt-2">{formatNaira(totalRevenue)}</p>
-          <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 mt-1">
-            <IconTrendingUp size={12} /> +18.4% from last week
-          </div>
         </div>
 
         <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs">
@@ -87,7 +87,6 @@ export function BusinessDashboard({ navigateBusiness }) {
             </div>
           </div>
           <p className="text-xl sm:text-2xl font-black text-teal-700 mt-2">{totalMealsSaved} Meals</p>
-          <p className="text-[11px] text-teal-600 font-medium mt-1">~38.4 kg CO₂ saved</p>
         </div>
 
         <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-xs">
@@ -212,7 +211,7 @@ export function BusinessDashboard({ navigateBusiness }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {foods.slice(0, 3).map((food) => {
             const itemTitle = food.name || food.title || 'Surplus Item';
-            const price = food.discountPrice || food.surplusPrice || 1800;
+            const price = getListingPrice(food) || 1800;
             const stock = food.quantityLeft !== undefined ? food.quantityLeft : (food.quantity !== undefined ? food.quantity : 4);
 
             return (

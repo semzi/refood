@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice, getListingOriginalPrice } from "../../utils/formatters";
 import {
   IconShield, IconCard, IconBank, IconChevronRight, ICON_SIZE, ICON_SM
 } from "../../components/common/Icons";
@@ -24,10 +24,10 @@ export function Checkout() {
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
 
   const items = cart.map(c => ({ ...c, listing: listings.find(l => l.id === c.listingId) })).filter(x => x.listing);
-  const subtotal = items.reduce((s, i) => s + i.listing.surplusPrice * i.qty, 0);
+  const subtotal = items.reduce((s, i) => s + getListingPrice(i.listing) * i.qty, 0);
   const deliveryFee = fulfillment === "delivery" ? 500 : 0;
   const total = subtotal + deliveryFee + 100;
-  const savings = items.reduce((s, i) => s + (i.listing.originalPrice - i.listing.surplusPrice) * i.qty, 0);
+  const savings = items.reduce((s, i) => s + (getListingOriginalPrice(i.listing) - getListingPrice(i.listing)) * i.qty, 0);
   const vAccount = useMemo(() => "812" + String(total).padStart(7, "0").slice(-7), [total]);
 
   useEffect(() => {
@@ -192,7 +192,7 @@ export function Checkout() {
               <div key={i.listingId} className="flex gap-3 text-sm">
                 <img src={i.listing.image} alt={i.listing.name} className="w-12 h-12 rounded-xl object-cover" />
                 <div className="flex-1"><p className="font-bold text-[#0f2815]">{i.listing.name}</p><p className="text-xs text-[#5a6b5a] font-medium">Qty: {i.qty}</p></div>
-                <span className="font-bold text-[#0f2815]">{formatNaira(i.listing.surplusPrice * i.qty)}</span>
+                <span className="font-bold text-[#0f2815]">{formatNaira(getListingPrice(i.listing) * i.qty)}</span>
               </div>
             ))}
           </div>

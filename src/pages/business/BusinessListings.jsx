@@ -7,7 +7,7 @@ import {
   IconTrash2,
   IconClock,
 } from '../../components/common/Icons';
-import { formatNaira } from '../../utils/formatters';
+import { formatNaira, getListingPrice, getListingOriginalPrice } from '../../utils/formatters';
 
 export function BusinessListings({ navigateBusiness }) {
   const { foods = [], deleteFood } = useApp();
@@ -76,8 +76,8 @@ export function BusinessListings({ navigateBusiness }) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredFoods.map((food) => {
           const itemTitle = food.name || food.title || 'Surplus Item';
-          const originalPrice = food.originalPrice || 3500;
-          const discountPrice = food.discountPrice || food.surplusPrice || 1800;
+          const originalPrice = getListingOriginalPrice(food) || 3500;
+          const discountPrice = getListingPrice(food) || 1800;
           const quantityLeft = food.quantityLeft !== undefined ? food.quantityLeft : (food.quantity !== undefined ? food.quantity : 5);
           const pickupWindow = food.pickupTime || food.pickupWindow || '5:00 PM - 8:00 PM';
           const discountPercent = originalPrice > 0 ? Math.round(((originalPrice - discountPrice) / originalPrice) * 100) : 0;

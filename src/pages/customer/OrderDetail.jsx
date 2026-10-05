@@ -3,7 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { BackButton } from '../../components/common/BackButton';
 import { Empty } from '../../components/common/Empty';
 import { IconStar } from '../../components/common/Icons';
-import { formatNaira } from '../../utils/formatters';
+import { formatNaira, getOrderItemPrice, getOrderItemQty } from '../../utils/formatters';
 
 export function OrderDetail({ orderId, id }) {
   const { orders, businesses, addReview, navigate } = useApp();
@@ -56,8 +56,8 @@ export function OrderDetail({ orderId, id }) {
         <div className="mt-4 space-y-3 text-sm">
           {order.items?.map((it, idx) => {
             const itemTitle = it.name || it.title || 'Surplus Meal';
-            const itemQty = it.qty || it.quantity || 1;
-            const itemPrice = it.price || it.discountPrice || it.surplusPrice || 1500;
+            const itemQty = getOrderItemQty(it);
+            const itemPrice = getOrderItemPrice(it);
 
             return (
               <div key={idx} className="flex gap-3 bg-[#f7f8f6] rounded-2xl p-3 items-center">
@@ -82,7 +82,7 @@ export function OrderDetail({ orderId, id }) {
         <div className="mt-4 bg-[#f7f8f6] rounded-2xl p-4 text-sm space-y-2">
           <div className="flex justify-between text-[#5a6b5a] font-medium">
             <span>Subtotal</span>
-            <span className="font-bold text-[#0f2815]">{formatNaira(order.subtotal || order.total - 600)}</span>
+            <span className="font-bold text-[#0f2815]">{formatNaira(order.subtotal ?? order.items?.reduce((s, it) => s + getOrderItemPrice(it) * getOrderItemQty(it), 0))}</span>
           </div>
           <div className="flex justify-between text-[#5a6b5a] font-medium">
             <span>Delivery</span>

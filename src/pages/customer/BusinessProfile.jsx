@@ -1,5 +1,5 @@
 import { useApp } from "../../context/AppContext";
-import { IconCheck, IconStar, ICON_SM } from "../../components/common/Icons";
+import { IconStar, IconBadgeCheck } from "../../components/common/Icons";
 import { BackButton } from "../../components/common/BackButton";
 import { FoodCard } from "../../components/customer/FoodCard";
 import { Empty } from "../../components/common/Empty";
@@ -31,8 +31,8 @@ export function BusinessProfile({ id }) {
                   <h1 className="text-[19px] md:text-[20px] font-bold tracking-tight text-[#0f1f0f] leading-none mt-[2px]">{b.name}</h1>
                 </div>
                 {b.verified && (
-                  <span className="inline-flex items-center gap-1 text-[11px] bg-white text-[#157a3b] px-2.5 py-1 rounded-full font-bold shadow-[0_1px_6px_rgba(0,0,0,0.08)] border border-[#e2eee2]">
-                    <IconCheck size={ICON_SM} /> Verified
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0f7a3b] bg-white px-2 py-0.5 rounded-md border border-[#c8e0c8]">
+                    Verified <IconBadgeCheck size={14} />
                   </span>
                 )}
               </div>

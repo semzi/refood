@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
 import { categories } from "../../data/demoData";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice } from "../../utils/formatters";
 import { IconSearch, ICON_SIZE } from "../../components/common/Icons";
 import { FoodCard } from "../../components/customer/FoodCard";
 import { Empty } from "../../components/common/Empty";
@@ -24,7 +24,7 @@ export function Browse() {
 
   const filtered = listings.filter(l => {
     if (cat !== "All" && l.category !== cat) return false;
-    if (l.surplusPrice > maxPrice) return false;
+    if (getListingPrice(l) > maxPrice) return false;
     if (onlyAvailable && l.quantity <= 0) return false;
     const b = businesses.find(b => b.id === l.businessId);
     const text = (l.name + " " + b?.name + " " + l.category).toLowerCase();

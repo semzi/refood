@@ -4,7 +4,7 @@ import { businesses as initialBusinesses, initialListings, initialAddresses, ini
 const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 
-const STORAGE_KEY = "refood_state_v2";
+const STORAGE_KEY = "refood_state_v4";
 
 export const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/avataaars/svg?seed=Mercy%20S.&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc";
 
@@ -171,12 +171,15 @@ export function AppProvider({ children }) {
     const now = new Date();
     const items = cart.map(c => {
       const l = listings.find(li => li.id === c.listingId);
+      const unitPrice = Number(l.surplusPrice ?? l.discountPrice ?? l.price ?? 0) || 0;
       return {
         listingId: c.listingId,
         qty: c.qty,
         quantity: c.qty,
-        price: l.surplusPrice || l.discountPrice || l.price,
-        discountPrice: l.discountPrice || l.surplusPrice,
+        price: unitPrice,
+        surplusPrice: unitPrice,
+        discountPrice: unitPrice,
+        originalPrice: Number(l.originalPrice ?? 0) || 0,
         businessId: l.businessId,
         title: l.name || l.title,
         name: l.name || l.title,

@@ -1,12 +1,12 @@
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice } from "../../utils/formatters";
 import { BackButton } from "../../components/common/BackButton";
 import { Empty } from "../../components/common/Empty";
 
 export function Cart() {
   const { cart, listings, updateCartQty, removeFromCart, navigate } = useApp();
   const items = cart.map(c => ({ ...c, listing: listings.find(l => l.id === c.listingId) })).filter(x => x.listing);
-  const subtotal = items.reduce((s, i) => s + i.listing.surplusPrice * i.qty, 0);
+  const subtotal = items.reduce((s, i) => s + getListingPrice(i.listing) * i.qty, 0);
   const delivery = items.some(i => i.listing.delivery) ? 500 : 0;
   const total = subtotal + delivery + (items.length ? 100 : 0);
 
@@ -22,7 +22,7 @@ export function Cart() {
             <img src={i.listing.image} alt={i.listing.name} className="w-20 h-20 object-cover rounded-xl" />
             <div className="flex-1 min-w-0">
               <p className="font-bold text-[14px] text-[#0f2815] truncate">{i.listing.name}</p>
-              <p className="text-xs text-[#5a6b5a] font-medium">{formatNaira(i.listing.surplusPrice)} each</p>
+              <p className="text-xs text-[#5a6b5a] font-medium">{formatNaira(getListingPrice(i.listing))} each</p>
               <div className="mt-3 flex items-center gap-2">
                 <div className="flex items-center bg-[#f7f8f6] rounded-full p-1 border border-[#eef3ec]">
                   <button onClick={() => updateCartQty(i.listingId, i.qty - 1)} className="w-7 h-7 bg-white rounded-full grid place-items-center shadow-sm text-[#0f2815] font-bold cursor-pointer">−</button>
@@ -32,7 +32,7 @@ export function Cart() {
                 <button onClick={() => removeFromCart(i.listingId)} className="ml-auto text-xs font-bold text-[#8aa08a] hover:text-red-600 cursor-pointer">Remove</button>
               </div>
             </div>
-            <div className="font-bold text-[14px] text-[#0f2815]">{formatNaira(i.listing.surplusPrice * i.qty)}</div>
+            <div className="font-bold text-[14px] text-[#0f2815]">{formatNaira(getListingPrice(i.listing) * i.qty)}</div>
           </div>
         ))}
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { BusinessOrderStatusManager } from '../../components/business/BusinessOrderStatusManager';
 import { IconArrowLeft, IconMapPin, IconShieldCheck } from '../../components/common/Icons';
-import { formatNaira } from '../../utils/formatters';
+import { formatNaira, getOrderItemPrice, getOrderItemQty } from '../../utils/formatters';
 
 export function BusinessOrderDetail({ orderId, id, navigateBusiness }) {
   const { orders } = useApp();
@@ -54,8 +54,8 @@ export function BusinessOrderDetail({ orderId, id, navigateBusiness }) {
         <div className="divide-y divide-gray-100">
           {order.items?.map((item, idx) => {
             const itemTitle = item.name || item.title || 'Surplus Meal';
-            const itemQty = item.qty || item.quantity || 1;
-            const itemPrice = item.price || item.discountPrice || item.surplusPrice || 1500;
+            const itemQty = getOrderItemQty(item);
+            const itemPrice = getOrderItemPrice(item);
 
             return (
               <div key={idx} className="py-3 flex items-center justify-between gap-4 first:pt-0 last:pb-0">

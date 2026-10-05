@@ -6,7 +6,7 @@ import {
   IconPhone,
   IconShieldCheck,
 } from '../../components/common/Icons';
-import { formatNaira } from '../../utils/formatters';
+import { formatNaira, getOrderItemPrice, getOrderItemQty } from '../../utils/formatters';
 
 const STATUS_FILTERS = [
   { key: 'all', label: 'All Orders' },
@@ -107,9 +107,9 @@ export function BusinessOrders({ navigateBusiness }) {
                   <div className="space-y-1.5 bg-slate-50/70 p-3 rounded-2xl border border-gray-100">
                     <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Ordered Items</p>
                     {order.items?.map((item, idx) => {
-                      const qty = item.quantity || item.qty || 1;
+                      const qty = getOrderItemQty(item);
                       const name = item.name || item.title || 'Surplus Meal';
-                      const itemPrice = item.discountPrice || item.price || item.surplusPrice || 1500;
+                      const itemPrice = getOrderItemPrice(item);
                       return (
                         <div key={idx} className="text-xs text-gray-800 flex items-center justify-between gap-2">
                           <span className="font-semibold text-gray-900">

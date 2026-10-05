@@ -1,10 +1,12 @@
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice, getListingOriginalPrice } from "../../utils/formatters";
 import { IconHeart, IconMapPin, IconTrash2 } from "../common/Icons";
 
 export function FoodCard({ listing }) {
   const { toggleFavorite, favorites, navigate, addToCart, removeFromCart, cart } = useApp();
-  const discount = Math.round((1 - listing.surplusPrice / listing.originalPrice) * 100);
+  const salePrice = getListingPrice(listing);
+  const wasPrice = getListingOriginalPrice(listing);
+  const discount = wasPrice > 0 ? Math.round((1 - salePrice / wasPrice) * 100) : 0;
   const fav = favorites.includes(listing.id);
   const inCart = cart.some(c => c.listingId === listing.id);
   const soldOut = listing.status === "sold_out" || listing.quantity <= 0;
@@ -34,8 +36,8 @@ export function FoodCard({ listing }) {
           <IconMapPin size={12} className="shrink-0" />{listing.location}
         </p>
         <div className="mt-1 flex items-baseline gap-1.5">
-          <p className="font-extrabold text-[16px] text-[#0f2815] whitespace-nowrap">{formatNaira(listing.surplusPrice)}</p>
-          <p className="text-[11px] line-through text-[#9ab09a]">{formatNaira(listing.originalPrice)}</p>
+          <p className="font-extrabold text-[16px] text-[#0f2815] whitespace-nowrap">{formatNaira(salePrice)}</p>
+          <p className="text-[11px] line-through text-[#9ab09a]">{formatNaira(wasPrice)}</p>
         </div>
         <p
           className="mt-0.5 font-semibold sm:font-bold text-[12.5px] leading-snug text-[#0f2815] line-clamp-2 cursor-pointer hover:text-[#0f7a3b] transition"
@@ -48,7 +50,7 @@ export function FoodCard({ listing }) {
             onClick={(e) => { e.stopPropagation(); toggleFavorite(listing.id); }}
             title={fav ? "Remove from favourites" : "Save to favourites"}
             aria-label={fav ? "Remove from favourites" : "Save to favourites"}
-            className={`w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full grid place-items-center transition active:scale-90 cursor-pointer ${fav ? "bg-red-500 text-white" : "bg-[#FFA726] text-[#0f2815]"}`}
+            className={`w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-full grid place-items-center transition active:scale-90 cursor-pointer border ${fav ? "bg-red-500 border-red-500 text-white" : "bg-white border-[#d6e2d6] text-[#0f2815] hover:border-red-300 hover:text-red-500"}`}
           >
             <IconHeart filled={fav} size={18} />
           </button>

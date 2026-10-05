@@ -12,7 +12,7 @@ export function BusinessListingForm({ editId, navigateBusiness }) {
   const [description, setDescription] = useState(existingFood?.description || '');
   const [category, setCategory] = useState(existingFood?.category || 'Meals');
   const [originalPrice, setOriginalPrice] = useState(existingFood?.originalPrice || 4500);
-  const [discountPrice, setDiscountPrice] = useState(existingFood?.discountPrice || existingFood?.surplusPrice || 2200);
+  const [discountPrice, setDiscountPrice] = useState(existingFood?.surplusPrice ?? existingFood?.discountPrice ?? 2200);
   const [quantityLeft, setQuantityLeft] = useState(existingFood?.quantityLeft !== undefined ? existingFood.quantityLeft : (existingFood?.quantity !== undefined ? existingFood.quantity : 5));
   const [pickupTime, setPickupTime] = useState(existingFood?.pickupTime || existingFood?.pickupWindow || '5:00 PM - 8:30 PM');
   const [image, setImage] = useState(

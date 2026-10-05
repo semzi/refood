@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getOrderItemPrice, getOrderItemQty } from "../../utils/formatters";
 import {
   IconMapPin, IconChevronRight, IconCheck, ICON_SIZE, ICON_SM
 } from "../../components/common/Icons";
@@ -54,7 +54,7 @@ export function Orders() {
                           <div className="flex-1 min-w-0">
                             <p className="font-bold text-[14px] text-[#0f2815] leading-tight truncate">{o.items[0]?.name} {o.items.length > 1 && <span className="text-[#5a6b5a] font-medium">+{o.items.length - 1}</span>}</p>
                             <p className="text-[12.5px] text-[#3a4a3a] font-medium mt-0.5 flex flex-wrap items-center gap-1">
-                              <span>{b?.name}</span><span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span><span>{o.items[0]?.qty}× {formatNaira(o.items[0]?.price)}</span>
+                              <span>{b?.name}</span><span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span><span>{getOrderItemQty(o.items[0])}× {formatNaira(getOrderItemPrice(o.items[0]))}</span>
                             </p>
                             <p className="text-[12px] text-[#5a6b5a] font-medium mt-1 flex items-center gap-1.5"><IconMapPin size={ICON_SM} />{b?.location} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {isPickup ? "Pickup" : "Delivery"} <span className="w-1 h-1 bg-[#c5d6c5] rounded-full"></span> {o.estimatedWindow}</p>
                           </div>

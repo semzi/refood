@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice, getListingOriginalPrice } from "../../utils/formatters";
 import {
   IconHeart, IconStar, IconStore, IconBike, ICON_SIZE, ICON_SM
 } from "../../components/common/Icons";
@@ -23,7 +23,7 @@ export function FoodDetail({ id }) {
     category: "Meals"
   };
 
-  const discount = Math.round((1 - listing.surplusPrice / listing.originalPrice) * 100);
+  const discount = getListingOriginalPrice(listing) > 0 ? Math.round((1 - getListingPrice(listing) / getListingOriginalPrice(listing)) * 100) : 0;
   const fav = favorites.includes(listing.id);
   const inCart = cart.find(c => c.listingId === id);
   const sameKitchen = listings.filter(l => l.businessId === b.id && l.id !== id).slice(0, 4);
@@ -83,13 +83,13 @@ export function FoodDetail({ id }) {
           {/* Price */}
           <div className="flex items-baseline gap-3 mt-4">
             <span className="text-3xl font-black text-[#0f2815]">
-              {formatNaira(listing.surplusPrice)}
+              {formatNaira(getListingPrice(listing))}
             </span>
             <span className="text-base line-through text-[#8aa08a]">
-              {formatNaira(listing.originalPrice)}
+              {formatNaira(getListingOriginalPrice(listing))}
             </span>
             <span className="text-xs font-bold text-[#0f7a3b] bg-[#eef6ec] px-2 py-1 rounded">
-              Save {formatNaira(listing.originalPrice - listing.surplusPrice)}
+              Save {formatNaira(getListingOriginalPrice(listing) - getListingPrice(listing))}
             </span>
           </div>
 
@@ -156,7 +156,7 @@ export function FoodDetail({ id }) {
                   onClick={() => { for (let i = 0; i < qty; i++) addToCart(id, 1); }}
                   className="flex-1 bg-[#0f7a3b] hover:bg-[#126a33] text-white py-2.5 px-4 rounded-xl font-bold text-sm shadow-sm transition cursor-pointer"
                 >
-                  Add to cart • {formatNaira(listing.surplusPrice * qty)}
+                  Add to cart • {formatNaira(getListingPrice(listing) * qty)}
                 </button>
               </div>
 

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useApp } from "../../context/AppContext";
-import { formatNaira } from "../../utils/formatters";
+import { formatNaira, getListingPrice } from "../../utils/formatters";
 import { IconSearch, IconArrowRight, IconChevronRight, ICON_SIZE, ICON_SM } from "../../components/common/Icons";
 import { HeroBanner } from "../../components/common/HeroBanner";
 import { FoodCard } from "../../components/customer/FoodCard";
@@ -59,7 +59,7 @@ export function Home() {
                 <div className="space-y-4">
                   <p className="text-[12px] font-bold text-[#8aa08a] uppercase tracking-wide">Recent searches</p>
                   <div className="flex flex-wrap gap-2">
-                    {["Jollof Rice", "Suya", "Pounded Yam", "Moi Moi", "Chin Chin"].map(s => (
+                    {["Jollof Rice", "Suya", "Pounded Yam", "Moi Moi", "Plantain"].map(s => (
                       <button key={s} onClick={() => setQ(s)} className="bg-white border border-[#eef3ec] rounded-full px-4 py-2 text-[13px] font-semibold text-[#3a4a3a] hover:bg-[#eef3ec] transition cursor-pointer">{s}</button>
                     ))}
                   </div>
@@ -80,7 +80,7 @@ export function Home() {
                           <div className="flex-1 min-w-0">
                             <p className="font-bold text-[13px] text-[#0f2815] truncate">{l.name}</p>
                             <p className="text-[11px] text-[#5a6b5a] font-medium truncate">{b?.name}</p>
-                            <p className="text-[13px] font-extrabold text-[#0f2815] mt-0.5">{formatNaira(l.surplusPrice)}</p>
+                            <p className="text-[13px] font-extrabold text-[#0f2815] mt-0.5">{formatNaira(getListingPrice(l))}</p>
                           </div>
                           <IconChevronRight size={ICON_SIZE} className="text-[#8aa08a] shrink-0" />
                         </button>
